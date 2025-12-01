@@ -13,6 +13,7 @@ You can refer to the original server/login/agent code here:  https://github.com/
 ### Client Code
 The client-side code does receive small, controlled updates. The original Essentials repository remains archived as an immutable and stable reference.
 You can refer to the original client code here:  https://github.com/Spelunkern/shaiya-essentials
+
 ---
 
 ⚠ Work in Progress
