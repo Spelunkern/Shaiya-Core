@@ -70,6 +70,8 @@
     <ClCompile Include="src\vehicle.cpp" />
     <ClCompile Include="src\weapon_step.cpp" />
     <ClCompile Include="src\window.cpp" />
+    <ClCompile Include="src\Raid_Buttons.cpp" />
+    <ClCompile Include="src\Raid150.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resources\sdev.rc" />
