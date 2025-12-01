@@ -7,7 +7,7 @@ As the spiritual successor to the Essentials project, Core aims to deliver a bet
 Please note that this repository is simply a merge of two existing projects (EP6 + Essentials) to offer a cleaner and easier-to-manage solution. If you prefer, you may compile each part separately from their original repositories.
 
 ### Server Code
-The server-side code does not receive direct modifications in this project; it remains a strict copy of the EP6 project without a single line changed. However, Core does periodically update the server code to stay up to date with the original repository, and all new versions are tested beforehand. Server builds are archived, so you may choose to use Build v1 or the latest available version.
+The server-side code does not receive direct modifications in this project; it remains a strict copy of the EP6 project without a single line changed, offering a stable and immutable version. If you want to keep the latest code updates, please keep using EP6 repository code instead.
 
 ### Client Code
 The client-side code does receive small, controlled updates. The original Essentials repository remains archived as an immutable and stable reference.
