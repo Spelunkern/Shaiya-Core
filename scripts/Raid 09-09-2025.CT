@@ -1,0 +1,2547 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="38">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>492</ID>
+      <Description>"Raid"</Description>
+      <Options moManualExpandCollapse="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+      <LastState Value="" Activated="1" RealAddress="00000000"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>808</ID>
+          <Description>"ps_game.0044DFB0 - CParty::CParty()"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+4DFD5:
+lea eax,[esi+000004DC]
+
+"ps_game.exe"+4DFE7:
+lea eax,[esi+000004F4]
+
+[DISABLE]
+"ps_game.exe"+4DFD5:
+lea eax,[esi+00000118]
+
+"ps_game.exe"+4DFE7:
+lea eax,[esi+00000130]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>803</ID>
+          <Description>"ps_game.0044E020 - CParty::~CParty()"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+0044E045:
+lea eax,[esi+000004F4]
+
+0044E059:
+add esi,000004DC
+
+[DISABLE]
+0044E045:
+lea eax,[esi+00000130]
+
+0044E059:
+add esi,00000118
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>790</ID>
+          <Description>"ps_game.0044E080 - CParty::Reset"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+0044E08B:
+mov [eax+000004C8],ebx
+
+0044E091:
+mov [eax+000004CC],ebx
+
+0044E097:
+mov [eax+000004D0],ebx
+
+0044E0A6:
+mov edx,00000096
+
+0044E0C1:
+mov [eax+000004D8],bl
+
+0044E0C7:
+mov [eax+000004D9],bl
+
+0044E0CD:
+mov [eax+000004D4],00000001
+
+[DISABLE]
+0044E08B:
+mov [eax+00000104],ebx
+
+0044E091:
+mov [eax+00000108],ebx
+
+0044E097:
+mov [eax+0000010C],ebx
+
+0044E0A6:
+mov edx,0000001E
+
+0044E0C1:
+mov [eax+00000114],bl
+
+0044E0C7:
+mov [eax+00000115],bl
+
+0044E0CD:
+mov [eax+00000110],00000001
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>805</ID>
+          <Description>"ps_game.0044E0E0 - CParty::Lock"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+0044E0E0:
+add eax,000004DC
+
+[DISABLE]
+0044E0E0:
+add eax,00000118
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>804</ID>
+          <Description>"ps_game.0044E0F0 - CParty::Unlock"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+0044E0F0:
+add eax,000004DC
+
+[DISABLE]
+0044E0F0:
+add eax,00000118
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>504</ID>
+          <Description>"ps_game.0044E110 - CPartyLock::CPartyLock"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+4E11C:
+add eax,000004DC
+
+"ps_game.exe"+4E133:
+add eax,000004DC
+
+[DISABLE]
+"ps_game.exe"+4E11C:
+add eax,00000118
+
+"ps_game.exe"+4E133:
+add eax,00000118
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>234</ID>
+          <Description>"ps_game.0044E150 - CPartyLock::~CPartyLock"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+4E156:
+add eax,000004DC
+
+[DISABLE]
+"ps_game.exe"+4E156:
+add eax,00000118
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>778</ID>
+          <Description>"ps_game.0044E170 - CParty::ChkPartyExpByLevel"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+4E170:
+mov al,[edi+000004D8]
+
+"ps_game.exe"+4E1CB:
+mov [edi+000004D0],edx
+
+"ps_game.exe"+4E219:
+mov [edi+000004D0],eax
+
+[DISABLE]
+"ps_game.exe"+4E170:
+mov al,[edi+00000114]
+
+"ps_game.exe"+4E1CB:
+mov [edi+0000010C],edx
+
+"ps_game.exe"+4E219:
+mov [edi+0000010C],eax
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>500</ID>
+          <Description>"ps_game.0044E260 - CParty::IsPartyBoth"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+4E261:
+lea edi,[esi+000004DC]
+
+[DISABLE]
+"ps_game.exe"+4E261:
+lea edi,[esi+00000118]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>90</ID>
+          <Description>"ps_game.0044E2A0 - CParty::IsPartySubBoth"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+4E2A0:
+cmp byte ptr [esi+000004D8],00
+
+"ps_game.exe"+4E2AF:
+lea edi,[esi+000004DC]
+
+"ps_game.exe"+4E2C2:
+mov eax,[esi+000004D4]
+
+[DISABLE]
+"ps_game.exe"+4E2A0:
+cmp byte ptr [esi+00000114],00
+
+"ps_game.exe"+4E2AF:
+lea edi,[esi+00000118]
+
+"ps_game.exe"+4E2C2:
+mov eax,[esi+00000110]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>507</ID>
+          <Description>"ps_game.0044E2F0 - CParty::GetPartyBoth"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+4E2F2:
+lea edi,[esi+000004DC]
+
+[DISABLE]
+"ps_game.exe"+4E2F2:
+lea edi,[esi+00000118]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>806</ID>
+          <Description>"ps_game.0044E320 - CParty::GetPartySubBoth"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+0044E322:
+lea edi,[esi+000004DC]
+
+0044E331:
+cmp [esi+000004D8],bl
+
+0044E34A:
+mov eax,[esi+000004D4]
+
+[DISABLE]
+0044E322:
+lea edi,[esi+00000118]
+
+0044E331:
+cmp [esi+00000114],bl
+
+0044E34A:
+mov eax,[esi+00000110]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>537</ID>
+          <Description>"ps_game.0044E360 - CParty::BreakParty"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+4E379:
+lea edi,[ebp+000004DC]
+
+"ps_game.exe"+4E4C3:
+lea ebx,[edi+000004DC]
+
+[DISABLE]
+"ps_game.exe"+4E379:
+lea edi,[ebp+00000118]
+
+"ps_game.exe"+4E4C3:
+lea ebx,[edi+00000118]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>809</ID>
+          <Description>"ps_game.0044E480 - CParty::ChangeUser"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+0044E4C3:
+lea ebx,[edi+000004DC]
+
+[DISABLE]
+0044E4C3:
+lea ebx,[edi+00000118]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>86</ID>
+          <Description>"ps_game.0044E550"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,128)
+label(returnhere)
+
+newmem:
+cmp eax,96
+jl ps_game.exe+4E563
+jmp returnhere
+
+"ps_game.exe"+4E570:
+jmp newmem
+returnhere:
+
+0044E551:
+lea edi,[esi+000004DC]
+
+0044E567:
+cmp eax,[esi+000004D4]
+
+[DISABLE]
+dealloc(newmem)
+"ps_game.exe"+4E570:
+cmp eax,1E
+jl ps_game.exe+4E563
+
+0044E551:
+lea edi,[esi+00000118]
+
+0044E567:
+cmp eax,[esi+00000110]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>802</ID>
+          <Description>"ps_game.0044E590 - CParty::SetRaidPartySubBoth"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+4E597:
+lea edi,[esi+000004DC]
+
+"ps_game.exe"+4E5CE:
+mov [esi+000004D4],eax
+
+"ps_game.exe"+4E5D4:
+mov ecx,[esi+000004D4]
+
+[DISABLE]
+"ps_game.exe"+4E597:
+lea edi,[esi+00000118]
+
+"ps_game.exe"+4E5CE:
+mov [esi+00000110],eax
+
+"ps_game.exe"+4E5D4:
+mov ecx,[esi+00000110]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>807</ID>
+          <Description>"ps_game.0044E610"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+0044E611:
+lea edi,[esi+000004DC]
+
+0044E62C:
+cmp eax,[esi+000004D4]
+
+0044E645:
+mov [esi+000004D4],eax
+
+[DISABLE]
+0044E611:
+lea edi,[esi+00000118]
+
+0044E62C:
+cmp eax,[esi+00000110]
+
+0044E645:
+mov [esi+00000110],eax
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>531</ID>
+          <Description>"ps_game.0044E660 - CParty::SetRaidPartyBoth"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+4E669:
+lea ebx,[esi+000004DC]
+
+"ps_game.exe"+4E6E5:
+cmp edi,[esi+000004D4]
+
+"ps_game.exe"+4E708:
+mov [esi+000004D4],eax
+
+"ps_game.exe"+4E70E:
+mov ecx,[esi+000004D4]
+
+[DISABLE]
+"ps_game.exe"+4E669:
+lea ebx,[esi+00000118]
+
+"ps_game.exe"+4E6E5:
+cmp edi,[esi+00000110]
+
+"ps_game.exe"+4E708:
+mov [esi+00000110],eax
+
+"ps_game.exe"+4E70E:
+mov ecx,[esi+00000110]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>796</ID>
+          <Description>"ps_game.0044E660 - CParty::SetRaidPartyBoth"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,128)
+label(returnhere)
+
+newmem:
+cmp eax,96
+jl ps_game.exe+4E6F4
+jmp returnhere
+
+"ps_game.exe"+4E701:
+jmp newmem
+returnhere:
+ 
+[DISABLE]
+dealloc(newmem)
+"ps_game.exe"+4E701:
+cmp eax,1E
+jl ps_game.exe+4E6F4
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>506</ID>
+          <Description>"ps_game.0044E7C0 - CParty::SetPartyBoth"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+4E7C8:
+lea ebp,[esi+000004DC]
+
+[DISABLE]
+"ps_game.exe"+4E7C8:
+lea ebp,[esi+00000118]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>501</ID>
+          <Description>"ps_game.0044E8B0 - CParty::FindUser"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+4E8B7:
+lea ebx,[edi+000004DC]
+
+"ps_game.exe"+4E8C4:
+mov al,[edi+000004D8]
+
+[DISABLE]
+"ps_game.exe"+4E8B7:
+lea ebx,[edi+00000118]
+
+"ps_game.exe"+4E8C4:
+mov al,[edi+00000114]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>776</ID>
+          <Description>"ps_game.0044E950 - CParty::Send"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+4E967:
+lea eax,[esi+000004DC]
+
+"ps_game.exe"+4E979:
+mov al,[esi+000004D8]
+
+[DISABLE]
+"ps_game.exe"+4E967:
+lea eax,[esi+00000118]
+
+"ps_game.exe"+4E979:
+mov al,[esi+00000114]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>546</ID>
+          <Description>"ps_game.0044EA00 - CParty::Send (overload)"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+4EA14:
+lea edi,[ebx+000004DC]
+
+[DISABLE]
+dealloc(newmem)
+"ps_game.exe"+4EA14:
+lea edi,[ebx+00000118]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>189</ID>
+          <Description>"ps_game.0044EA80"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+4EAA4:
+lea esi,[ebp+000004DC]
+
+[DISABLE]
+"ps_game.exe"+4EAA4:
+lea esi,[ebp+00000118]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>102</ID>
+          <Description>"ps_game.0044EB70"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+4EB85:
+lea edi,[ebx+000004DC]
+
+[DISABLE]
+"ps_game.exe"+4EB85:
+lea edi,[ebx+00000118]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>101</ID>
+          <Description>"ps_game.0044EC00 - CParty::SendMove"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+4EC06:
+mov cl,[ebx+000004D8]
+
+[DISABLE]
+"ps_game.exe"+4EC06:
+mov cl,[ebx+00000114]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>515</ID>
+          <Description>"ps_game.0044EC70 - CParty::SetRaidParty"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+4EC75:
+mov byte ptr [esi+000004D8],01
+
+"ps_game.exe"+4EC8D:
+lea edi,[esi+000004DC]
+
+"ps_game.exe"+4ECA8:
+cmp eax,[esi+000004D4]
+
+"ps_game.exe"+4ECBF:
+mov [esi+000004D4],eax
+
+[DISABLE]
+"ps_game.exe"+4EC75:
+mov byte ptr [esi+00000114],01
+
+"ps_game.exe"+4EC8D:
+lea edi,[esi+00000118]
+
+"ps_game.exe"+4ECA8:
+cmp eax,[esi+00000110]
+
+"ps_game.exe"+4ECBF:
+mov [esi+00000110],eax
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>797</ID>
+          <Description>"ps_game.0044ECD0 - CParty::SetAutoJoin"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+0044ECD0:
+mov [eax+000004D9],cl
+
+[DISABLE]
+0044ECD0:
+mov [eax+00000115],cl
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>798</ID>
+          <Description>"ps_game.0044ECE0 - CParty::SetItemDiv"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+0044ECE0:
+mov [eax+000004C8],ecx
+
+[DISABLE]
+0044ECE0:
+mov [eax+00000104],ecx
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>759</ID>
+          <Description>"ps_game.0044ECF0 - CParty::GetGroup"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,128)
+label(returnhere)
+
+newmem:
+cmp ecx,96
+jl ps_game.exe+4ED13
+jmp returnhere
+
+"ps_game.exe"+4ED22:
+jmp newmem
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+"ps_game.exe"+4ED22:
+cmp ecx,1E
+jl ps_game.exe+4ED13
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>93</ID>
+          <Description>"ps_game.0044ED40 - CParty::GetRaidItemDivSeq"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,128)
+label(returnhere)
+
+newmem:
+cmp eax,96
+jl ps_game.exe+4ED58
+jmp returnhere
+
+"ps_game.exe"+4ED66:
+jmp newmem
+returnhere:
+
+0044ED43:
+cmp byte ptr [ecx+000004D8],00
+
+0044ED4D:
+mov esi,[ecx+000004CC]
+
+[DISABLE]
+dealloc(newmem)
+"ps_game.exe"+4ED66:
+cmp eax,1E
+jl ps_game.exe+4ED58
+
+0044ED43:
+cmp byte ptr [ecx+00000114],00
+
+0044ED4D:
+mov esi,[ecx+00000108]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>801</ID>
+          <Description>"ps_game.0044ED70 - CParty::EnterUser"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+
+"ps_game.exe"+4ED70:
+cmp byte ptr [eax+000004D8],01
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"ps_game.exe"+4ED70:
+cmp byte ptr [eax+00000114],01
+//Alt: db 80 B8 14 01 00 00 01
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>794</ID>
+          <Description>"ps_game.0044ED90 - CParty::EnterRaidParty"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+4EDBE:
+lea esi,[ebp+000004DC]
+
+"ps_game.exe"+4EF59:
+mov ecx,[ebp+000004D4]
+
+"ps_game.exe"+4EF6B:
+mov cl,[ebp+000004D9]
+
+"ps_game.exe"+4EF78:
+mov cx,[ebp+000004C8]
+
+"ps_game.exe"+4EF88:
+movzx eax,byte ptr [ebp+000004D8]
+
+"ps_game.exe"+4F17A:
+lea eax,[ebp+000004DC]
+
+[DISABLE]
+"ps_game.exe"+4EDBE:
+lea esi,[ebp+00000118]
+
+"ps_game.exe"+4EF59:
+mov ecx,[ebp+00000110]
+
+"ps_game.exe"+4EF6B:
+mov cl,[ebp+00000115]
+
+"ps_game.exe"+4EF78:
+mov cx,[ebp+00000104]
+
+"ps_game.exe"+4EF88:
+movzx eax,byte ptr [ebp+00000114]
+
+"ps_game.exe"+4F17A:
+lea eax,[ebp+00000118]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>19</ID>
+          <Description>"ps_game.0044ED90 - CParty::EnterRaidParty"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,128)
+label(returnhere)
+
+newmem:
+cmp dword ptr [ebp+10],96
+push esi
+jmp returnhere
+
+"ps_game.exe"+4EDB0:
+jmp newmem
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+"ps_game.exe"+4EDB0:
+cmp dword ptr [ebp+10],1E
+push esi
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>623</ID>
+          <Description>"ps_game.0044ED90 - CParty::EnterRaidParty"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,128)
+label(returnhere)
+
+newmem:
+cmp eax,96
+mov [esp+24],eax
+jmp returnhere
+
+"ps_game.exe"+4F128:
+jmp newmem
+nop
+nop
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+"ps_game.exe"+4F128:
+cmp eax,1E
+mov [esp+24],eax
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>494</ID>
+          <Description>"ps_game.0044F210 - CParty::EnterNormalParty"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+4F24C:
+lea eax,[ebp+000004DC]
+
+"ps_game.exe"+4F4E7:
+lea eax,[ebp+000004DC]
+
+[DISABLE]
+"ps_game.exe"+4F24C:
+lea eax,[ebp+00000118]
+
+"ps_game.exe"+4F4E7:
+lea eax,[ebp+00000118]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>21</ID>
+          <Description>"ps_game.0044F580 - CParty::GetEmptySlot"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,128)
+label(returnhere)
+
+newmem:
+cmp eax,96
+jl ps_game.exe+4F587
+jmp returnhere
+
+"ps_game.exe"+4F5A6:
+jmp newmem
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+"ps_game.exe"+4F5A6:
+cmp eax,1E
+jl ps_game.exe+4F587
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>23</ID>
+          <Description>"ps_game.0044F5F0 - CParty::LeaveUser "</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+4F5F6:
+cmp byte ptr [ecx+000004D8],01
+
+[DISABLE]
+"ps_game.exe"+4F5F6:
+cmp byte ptr [ecx+00000114],01
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>24</ID>
+          <Description>"ps_game.0044F620 - CParty::LeaveRaidParty"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+4F641:
+lea eax,[ebx+000004DC]
+
+"ps_game.exe"+4F6B3:
+cmp edi,[ebx+000004D4]
+
+"ps_game.exe"+4F71A:
+mov edx,[ebx+000004D4]
+
+"ps_game.exe"+4F725:
+mov [ebx+000004D4],edx
+
+"ps_game.exe"+4F734:
+mov eax,[ebx+000004CC]
+
+"ps_game.exe"+4F73F:
+mov [ebx+000004CC],eax
+
+"ps_game.exe"+4F76E:
+cmp byte ptr [ebx+000004D8],01
+
+"ps_game.exe"+4F792:
+mov edx,[ebx+000004D4]
+
+"ps_game.exe"+4F7C2:
+mov [ebx+000004D4],eax
+
+"ps_game.exe"+4F969:
+mov edx,[ebx+000004D4]
+
+[DISABLE]
+"ps_game.exe"+4F641:
+lea eax,[ebx+00000118]
+
+"ps_game.exe"+4F6B3:
+cmp edi,[ebx+00000110]
+
+"ps_game.exe"+4F71A:
+mov edx,[ebx+00000110]
+
+"ps_game.exe"+4F725:
+mov [ebx+00000110],edx
+
+"ps_game.exe"+4F734:
+mov eax,[ebx+00000108]
+
+"ps_game.exe"+4F73F:
+mov [ebx+00000108],eax
+
+"ps_game.exe"+4F76E:
+cmp byte ptr [ebx+00000114],01
+
+"ps_game.exe"+4F792:
+mov edx,[ebx+00000110]
+
+"ps_game.exe"+4F7C2:
+mov [ebx+00000110],eax
+
+"ps_game.exe"+4F969:
+mov edx,[ebx+00000110]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>37</ID>
+          <Description>"ps_game.0044FA60 - CParty::LeaveNormalParty"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+4FA81:
+lea eax,[ebx+000004DC]
+
+"ps_game.exe"+4FB22:
+mov eax,[ebx+000004CC]
+
+"ps_game.exe"+4FB2D:
+mov [ebx+000004CC],eax
+
+"ps_game.exe"+4FB61:
+cmp byte ptr [ebx+000004D8],01
+
+[DISABLE]
+"ps_game.exe"+4FA81:
+lea eax,[ebx+00000118]
+
+"ps_game.exe"+4FB22:
+mov eax,[ebx+00000108]
+
+"ps_game.exe"+4FB2D:
+mov [ebx+00000108],eax
+
+"ps_game.exe"+4FB61:
+cmp byte ptr [ebx+00000114],01
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>54</ID>
+          <Description>"ps_game.0044FDD0 - CParty::ExpelRaidPartyUser"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+4FDEB:
+lea eax,[ebx+000004DC]
+
+"ps_game.exe"+4FE57:
+cmp edi,[ebx+000004D4]
+
+"ps_game.exe"+4FEC8:
+mov edx,[ebx+000004D4]
+
+"ps_game.exe"+4FED3:
+mov [ebx+000004D4],edx
+
+"ps_game.exe"+4FEE2:
+mov eax,[ebx+000004CC]
+
+"ps_game.exe"+4FEED:
+mov [ebx+000004CC],eax
+
+"ps_game.exe"+4FF2F:
+cmp byte ptr [ebx+000004D8],01
+
+"ps_game.exe"+4FF53:
+mov edx,[ebx+000004D4]
+
+"ps_game.exe"+4FF83:
+mov [ebx+000004D4],eax
+
+"ps_game.exe"+50129:
+mov edx,[ebx+000004D4]
+
+[DISABLE]
+"ps_game.exe"+4FDEB:
+lea eax,[ebx+00000118]
+
+"ps_game.exe"+4FE57:
+cmp edi,[ebx+00000110]
+
+"ps_game.exe"+4FEC8:
+mov edx,[ebx+00000110]
+
+"ps_game.exe"+4FED3:
+mov [ebx+00000110],edx
+
+"ps_game.exe"+4FEE2:
+mov eax,[ebx+00000108]
+
+"ps_game.exe"+4FEED:
+mov [ebx+00000108],eax
+
+"ps_game.exe"+4FF2F:
+cmp byte ptr [ebx+00000114],01
+
+"ps_game.exe"+4FF53:
+mov edx,[ebx+00000110]
+
+"ps_game.exe"+4FF83:
+mov [ebx+00000110],eax
+
+"ps_game.exe"+50129:
+mov edx,[ebx+00000110]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>503</ID>
+          <Description>"ps_game.00450220 - CParty::ExpelUser"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+50238:
+lea eax,[ebx+000004DC]
+
+"ps_game.exe"+50307:
+cmp byte ptr [ebx+000004D8],01
+
+[DISABLE]
+"ps_game.exe"+50238:
+lea eax,[ebx+00000118]
+
+"ps_game.exe"+50307:
+cmp byte ptr [ebx+00000114],01
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>781</ID>
+          <Description>"ps_game.004504F0 - CParty::AutoPartyJoin"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+504F1:
+cmp byte ptr [eax+000004D8],00
+
+"ps_game.exe"+504FE:
+cmp byte ptr [eax+000004D9],00
+
+[DISABLE]
+"ps_game.exe"+504F1:
+cmp byte ptr [eax+00000114],00
+
+"ps_game.exe"+504FE:
+cmp byte ptr [eax+00000115],00
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>164</ID>
+          <Description>"ps_game.00450510"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+50521:
+add edi,000004F4
+
+[DISABLE]
+"ps_game.exe"+50521:
+add edi,00000130
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>647</ID>
+          <Description>"ps_game.00450590"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+505A1:
+add edi,000004F4
+
+[DISABLE]
+"ps_game.exe"+505A1:
+add edi,00000130
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>26</ID>
+          <Description>"ps_game.00450610"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+50622:
+add edi,000004F4
+
+[DISABLE]
+"ps_game.exe"+50622:
+add edi,00000130
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>545</ID>
+          <Description>"ps_game.00450690"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+506A1:
+add edi,000004F4
+
+[DISABLE]
+"ps_game.exe"+506A1:
+add edi,00000130
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>775</ID>
+          <Description>"ps_game.00450700"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+50719:
+add esi,000004F4
+
+[DISABLE]
+"ps_game.exe"+50719:
+add esi,00000130
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>493</ID>
+          <Description>"ps_game.004509C0"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+509DE:
+add edi,000004F4
+
+[DISABLE]
+"ps_game.exe"+509DE:
+add edi,00000130
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>497</ID>
+          <Description>"ps_game.00450B00"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+50B09:
+mov eax,[edi+0000050C]
+
+"ps_game.exe"+50B11:
+mov esi,[edi+000004F4]
+
+"ps_game.exe"+50B17:
+add edi,000004F4
+
+[DISABLE]
+"ps_game.exe"+50B09:
+mov eax,[edi+00000148]
+
+"ps_game.exe"+50B11:
+mov esi,[edi+00000130]
+
+"ps_game.exe"+50B17:
+add edi,00000130
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>793</ID>
+          <Description>"ps_game.00450C80 - CPartyMgr::CreateParty"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+50CC2:
+cmp [edi+000004D8],al
+
+"ps_game.exe"+50CBB:
+mov [edi+000004C8],eax
+
+[DISABLE]
+"ps_game.exe"+50CC2:
+cmp [edi+00000114],al
+
+"ps_game.exe"+50CBB:
+mov [edi+00000104],eax
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>570</ID>
+          <Description>"ps_game.00452220 - SSyncHeap&lt;CParty&gt;::Alloc"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+52253:
+push 00000514
+
+[DISABLE]
+"ps_game.exe"+52253:
+push 00000150
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>103</ID>
+          <Description>"ps_game.00455C40 - CUser::LeaveWorld"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+55C69:
+cmp byte ptr [ecx+000004D8],01
+
+[DISABLE]
+"ps_game.exe"+55C69:
+cmp byte ptr [ecx+00000114],01
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>166</ID>
+          <Description>"ps_game.004568E0"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,128)
+label(returnhere)
+
+newmem:
+cmp ecx,96
+jl ps_game.exe+568F2
+jmp returnhere
+
+"ps_game.exe"+568FA:
+jmp newmem
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+"ps_game.exe"+568FA:
+cmp ecx,1E
+jl ps_game.exe+568F2
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>810</ID>
+          <Description>"ps_game.00460000"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+600EE:
+lea ebp,[esi+000004DC]
+
+[DISABLE]
+"ps_game.exe"+600EE:
+lea ebp,[esi+00000118]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>104</ID>
+          <Description>"ps_game.004601B0 - CUser::SkillHealParty"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+60272:
+lea esi,[ebp+000004DC]
+
+0046028E:
+mov cl,[ebp+000004D8]
+
+[DISABLE]
+"ps_game.exe"+60272:
+lea esi,[ebp+00000118]
+
+0046028E:
+mov cl,[ebp+00000114]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>799</ID>
+          <Description>"ps_game.004603B0 - CUser::SkillHealNParty"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+00460494:
+add edi,000004DC
+
+004604B4:
+mov dl,[ecx+000004D8]
+
+[DISABLE]
+00460494:
+add edi,00000118
+
+004604B4:
+mov dl,[ecx+00000114]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>106</ID>
+          <Description>"ps_game.004605A0 - CUser::SkillBuffParty"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+6066D:
+add edi,000004DC
+
+"ps_game.exe"+6068D:
+mov dl,[ecx+000004D8]
+
+[DISABLE]
+"ps_game.exe"+6066D:
+add edi,00000118
+
+"ps_game.exe"+6068D:
+mov dl,[ecx+00000114]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>800</ID>
+          <Description>"ps_game.004605A0 - CUser::SkillBuffNParty"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+0046083E:
+lea ebp,[esi+000004DC]
+
+[DISABLE]
+0046083E:
+lea ebp,[esi+00000118]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>540</ID>
+          <Description>"ps_game.00460900"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+609E0:
+lea ebx,[esi+000004DC]
+
+[DISABLE]
+"ps_game.exe"+609E0:
+lea ebx,[esi+00000118]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>541</ID>
+          <Description>"ps_game.00460AC0"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+60B87:
+lea edi,[esi+000004DC]
+
+[DISABLE]
+"ps_game.exe"+60B87:
+lea edi,[esi+00000118]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>542</ID>
+          <Description>"ps_game.00465060 - CUser::AddExpFromUser"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+65134:
+cmp byte ptr [eax+000004D8],00
+
+[DISABLE]
+"ps_game.exe"+65134:
+cmp byte ptr [eax+00000114],00
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>543</ID>
+          <Description>"ps_game.004654C0 - CUser::Death"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+6583C:
+lea eax,[ebx+000004DC]
+
+"ps_game.exe"+6584D:
+mov al,[ebx+000004D8]
+
+"ps_game.exe"+658D8:
+mov eax,[ecx+000004D0]
+
+"ps_game.exe"+659F9:
+mov eax,[edx+000004D0]
+
+"ps_game.exe"+65D80:
+lea ebx,[esi+000004DC]
+
+"ps_game.exe"+65DB8:
+mov al,[ebx+000004D8]
+ 
+"ps_game.exe"+65E05:
+add esi,000004DC
+
+[DISABLE]
+"ps_game.exe"+6583C:
+lea eax,[ebx+00000118]
+
+"ps_game.exe"+6584D:
+mov al,[ebx+00000114]
+
+"ps_game.exe"+658D8:
+mov eax,[ecx+0000010C]
+
+"ps_game.exe"+659F9:
+mov eax,[edx+0000010C]
+
+"ps_game.exe"+65D80:
+lea ebx,[esi+00000118]
+
+"ps_game.exe"+65DB8:
+mov al,[ebx+00000114]
+
+"ps_game.exe"+65E05:
+add esi,00000118
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>625</ID>
+          <Description>"ps_game.004654C0 - CUser::Death"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,128)
+label(returnhere)
+
+newmem:
+cmp esi,96
+jle ps_game.exe+658A4
+jmp returnhere
+
+"ps_game.exe"+6589B:
+jmp newmem
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+"ps_game.exe"+6589B:
+cmp esi,1E
+jle ps_game.exe+658A4
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>626</ID>
+          <Description>"ps_game.004654C0 - CUser::Death"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,128)
+label(returnhere)
+
+newmem:
+cmp esi,96
+jle ps_game.exe+659C5
+jmp returnhere
+
+"ps_game.exe"+659BC:
+jmp newmem
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+"ps_game.exe"+659BC:
+cmp esi,1E
+jle ps_game.exe+659C5
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>547</ID>
+          <Description>"ps_game.00465E40 - CUser::DeathByNpc"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+65F95:
+lea ebp,[esi+000004DC]
+
+"ps_game.exe"+65FFF:
+add esi,000004DC
+ 
+ 
+[DISABLE]
+"ps_game.exe"+65F95:
+lea ebp,[esi+00000118]
+
+"ps_game.exe"+65FFF:
+add esi,00000118
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>205</ID>
+          <Description>"ps_game.004670A0 - CUser::ItemDropByUser"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+67419:
+add eax,000004DC
+
+"ps_game.exe"+67443:
+add eax,000004DC
+
+[DISABLE]
+"ps_game.exe"+67419:
+add eax,00000118
+
+"ps_game.exe"+67443:
+add eax,00000118
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>549</ID>
+          <Description>"ps_game.004674F0 - CUser::ItemDropByUserDeath"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+67758:
+lea eax,[esi+000004DC]
+
+"ps_game.exe"+6776F:
+mov eax,[esi+000004C8]
+
+004677CA:
+cmp [esi+000004CC],eax
+
+004677D2:
+mov [esi+000004CC],00000000
+
+004677DC:
+mov ebx,[esi+000004CC]
+
+00467804:
+mov [esi+000004CC],ebx
+
+0046783B:
+inc [esi+000004CC]
+
+00467861:
+cmp [esi+000004CC],eax
+
+00467869:
+mov [esi+000004CC],00000000
+
+00467873:
+mov ebx,[esi+000004CC]
+
+0046789B:
+mov [esi+000004CC],ebx
+
+004678C4:
+inc [esi+000004CC]
+
+[DISABLE]
+"ps_game.exe"+67758:
+lea eax,[esi+00000118]
+
+"ps_game.exe"+6776F:
+mov eax,[esi+00000104]
+
+004677CA:
+cmp [esi+00000108],eax
+
+004677D2:
+mov [esi+00000108],00000000
+
+004677DC:
+mov ebx,[esi+00000108]
+
+00467804:
+mov [esi+00000108],ebx
+
+0046783B:
+inc [esi+00000108]
+
+00467861:
+cmp [esi+00000108],eax
+
+00467869:
+mov [esi+00000108],00000000
+
+00467873:
+mov ebx,[esi+00000108]
+
+0046789B:
+mov [esi+00000108],ebx
+
+004678C4:
+inc [esi+00000108]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>171</ID>
+          <Description>"ps_game.0046A1E0 - CUser::ItemGet"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+6A871:
+mov al,[ecx+000004D8]
+
+[DISABLE]
+"ps_game.exe"+6A871:
+mov al,[ecx+00000114]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>172</ID>
+          <Description>"ps_game.0046AE60 - CUser::ItemGet (overload)"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+6B401:
+mov al,[ecx+000004D8]
+
+"ps_game.exe"+6B675:
+mov al,[esi+000004D8]
+
+[DISABLE]
+"ps_game.exe"+6B401:
+mov al,[ecx+00000114]
+
+"ps_game.exe"+6B675:
+mov al,[esi+00000114]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>551</ID>
+          <Description>"ps_game.00472DA0 - CUser::ItemUse"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+734A2:
+lea eax,[esi+000004DC]
+
+[DISABLE]
+"ps_game.exe"+734A2:
+lea eax,[esi+00000118]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>780</ID>
+          <Description>"ps_game.004752B0 - CUser::PacketParty"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+75423:
+add eax,000004DC
+
+"ps_game.exe"+75658:
+add eax,000004DC
+
+"ps_game.exe"+757DE:
+cmp byte ptr [eax+000004D9],00
+
+"ps_game.exe"+7583A:
+cmp byte ptr [esi+000004D8],00
+
+"ps_game.exe"+758C7:
+mov [edx+000004D8],al
+
+"ps_game.exe"+758D6:
+mov [ecx+000004C8],edx
+
+"ps_game.exe"+758E6:
+mov [eax+000004D9],cl
+
+"ps_game.exe"+758FC:
+movzx eax,byte ptr [esi+000004D8]
+
+"ps_game.exe"+75907:
+movzx ecx,byte ptr [esi+000004D9]
+
+"ps_game.exe"+75912:
+mov edx,[esi+000004C8]
+
+"ps_game.exe"+75927:
+mov edx,[esi+000004D4]
+
+"ps_game.exe"+75976:
+cmp byte ptr [eax+000004D8],00
+
+"ps_game.exe"+75986:
+mov [eax+000004C8],edx
+
+"ps_game.exe"+759E4:
+cmp byte ptr [eax+000004D8],00
+
+"ps_game.exe"+759F4:
+mov [eax+000004D9],cl
+
+"ps_game.exe"+75A0A:
+mov al,[esi+000004D9]
+
+"ps_game.exe"+75A4C:
+cmp byte ptr [eax+000004D8],00
+
+"ps_game.exe"+75A99:
+cmp byte ptr [eax+000004D8],00
+
+"ps_game.exe"+75B1B:
+mov edi,00000096
+
+"ps_game.exe"+75CF0:
+add eax,000004DC
+
+"ps_game.exe"+75D46:
+cmp byte ptr [edi+000004D8],00
+
+"ps_game.exe"+75D5C:
+mov edx,[edi+000004D4]
+
+"ps_game.exe"+75DA2:
+mov ecx,[esi+000004D4]
+
+"ps_game.exe"+75DF5:
+cmp byte ptr [esi+000004D8],00
+
+"ps_game.exe"+75E73:
+mov edi,00000096
+
+[DISABLE]
+"ps_game.exe"+75423:
+add eax,00000118
+
+"ps_game.exe"+75658:
+add eax,00000118
+
+"ps_game.exe"+757DE:
+cmp byte ptr [eax+00000115],00
+
+"ps_game.exe"+7583A:
+cmp byte ptr [esi+00000114],00
+
+"ps_game.exe"+75D46:
+cmp byte ptr [edi+000004D8],00
+
+"ps_game.exe"+758C7:
+mov [edx+00000114],al
+
+"ps_game.exe"+758D6:
+mov [ecx+00000104],edx
+
+"ps_game.exe"+758E6:
+mov [eax+00000115],cl
+
+"ps_game.exe"+758FC:
+movzx eax,byte ptr [esi+00000114]
+
+"ps_game.exe"+75907:
+movzx ecx,byte ptr [esi+00000115]
+
+"ps_game.exe"+75912:
+mov edx,[esi+00000104]
+
+"ps_game.exe"+75927:
+mov edx,[esi+00000110]
+
+"ps_game.exe"+75976:
+cmp byte ptr [eax+00000114],00
+
+"ps_game.exe"+75986:
+mov [eax+00000104],edx
+
+"ps_game.exe"+759E4:
+cmp byte ptr [eax+00000114],00
+
+"ps_game.exe"+759F4:
+mov [eax+00000115],cl
+
+"ps_game.exe"+75A0A:
+mov al,[esi+00000115]
+
+"ps_game.exe"+75A4C:
+cmp byte ptr [eax+00000114],00
+
+"ps_game.exe"+75A99:
+cmp byte ptr [eax+00000114],00
+
+"ps_game.exe"+75B1B:
+mov edi,0000001E
+
+"ps_game.exe"+75CF0:
+add eax,00000118
+
+"ps_game.exe"+75D46:
+cmp byte ptr [edi+00000114],00
+
+"ps_game.exe"+75D5C:
+mov edx,[edi+00000110]
+
+"ps_game.exe"+75DA2:
+mov ecx,[esi+00000110]
+
+"ps_game.exe"+75DF5:
+cmp byte ptr [esi+00000114],00
+
+"ps_game.exe"+75E73:
+mov edi,0000001E
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>624</ID>
+          <Description>"ps_game.004752B0 - CUser::PacketParty"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,128)
+label(returnhere)
+
+newmem:
+cmp dword ptr [eax+10],96
+jl ps_game.exe+7580D
+jmp returnhere
+
+"ps_game.exe"+757F7:
+jmp newmem
+nop
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+"ps_game.exe"+757F7:
+cmp dword ptr [eax+10],1E
+jl ps_game.exe+7580D
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>209</ID>
+          <Description>"ps_game.00476070 - CUser::PacketMainInterface"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+76926:
+add eax,000004DC
+
+"ps_game.exe"+76991:
+add eax,000004DC
+
+[DISABLE]
+"ps_game.exe"+76926:
+add eax,00000118
+
+"ps_game.exe"+76991:
+add eax,00000118
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>178</ID>
+          <Description>"ps_game.00478490 - CUser::PacketPC"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+78862:
+add eax,000004DC
+
+"ps_game.exe"+78EBF:
+add eax,000004DC
+
+[DISABLE]
+"ps_game.exe"+78862:
+add eax,00000118
+
+"ps_game.exe"+78EBF:
+add eax,00000118
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>552</ID>
+          <Description>"ps_game.0047F400 - CUser::PacketChatE"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+0047F92E:
+add eax,000004DC
+
+"ps_game.exe"+7F95F:
+cmp byte ptr [edi+000004D8],00
+
+"ps_game.exe"+7F971:
+mov ecx,[edi+000004D4]
+
+[DISABLE]
+0047F92E:
+add eax,00000118
+
+"ps_game.exe"+7F95F:
+cmp byte ptr [edi+00000114],00
+
+"ps_game.exe"+7F971:
+mov ecx,[edi+00000110]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>554</ID>
+          <Description>"ps_game.0047FD10 - CUser::PacketAdminChat"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+00480266:
+add eax,000004DC
+
+"ps_game.exe"+80297:
+cmp byte ptr [edi+000004D8],00
+
+"ps_game.exe"+802A9:
+mov ecx,[edi+000004D4]
+
+[DISABLE]
+00480266:
+add eax,00000118
+
+"ps_game.exe"+80297:
+cmp byte ptr [edi+00000114],00
+
+"ps_game.exe"+802A9:
+mov ecx,[edi+00000110]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>212</ID>
+          <Description>"ps_game.00482630 - CUser::PacketAdminCmdD"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+82D6A:
+add eax,000004DC
+
+"ps_game.exe"+82E2E:
+add eax,000004DC
+
+[DISABLE]
+"ps_game.exe"+82D6A:
+add eax,00000118
+
+"ps_game.exe"+82E2E:
+add eax,00000118
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>214</ID>
+          <Description>"ps_game.00483430 - CUser::PacketAdminCmdE"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+83C42:
+add eax,000004DC
+
+"ps_game.exe"+83C6F:
+add eax,000004DC
+
+[DISABLE]
+"ps_game.exe"+83C42:
+add eax,00000118
+
+"ps_game.exe"+83C6F:
+add eax,00000118
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>203</ID>
+          <Description>"ps_game.00484FC0 - CUser::PacketGuild"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+851CF:
+add eax,000004DC
+
+"ps_game.exe"+85395:
+add eax,000004DC
+
+"ps_game.exe"+856D0:
+add eax,000004DC
+
+[DISABLE]
+"ps_game.exe"+851CF:
+add eax,00000118
+
+"ps_game.exe"+85395:
+add eax,00000118
+
+"ps_game.exe"+856D0:
+add eax,00000118
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>556</ID>
+          <Description>"ps_game.00490830 - CUser::SendMaxHP"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+908D4:
+lea ebx,[edi+000004DC]
+
+"ps_game.exe"+90905:
+mov al,[ebx+000004D8]
+
+"ps_game.exe"+9093C:
+add edi,000004DC
+
+[DISABLE]
+"ps_game.exe"+908D4:
+lea ebx,[edi+00000118]
+
+"ps_game.exe"+90905:
+mov al,[ebx+00000114]
+
+"ps_game.exe"+9093C:
+add edi,00000118
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>559</ID>
+          <Description>"ps_game.00490960 - CUser::SendMaxSP"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+909E5:
+lea ebx,[edi+000004DC]
+
+"ps_game.exe"+90A16:
+mov al,[ebx+000004D8]
+
+"ps_game.exe"+90A4D:
+add edi,000004DC
+
+[DISABLE]
+"ps_game.exe"+909E5:
+lea ebx,[edi+00000118]
+
+"ps_game.exe"+90A16:
+mov al,[ebx+00000114]
+
+"ps_game.exe"+90A4D:
+add edi,00000118
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>562</ID>
+          <Description>"ps_game.00490A70 - CUser::SendMaxMP"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+90AF5:
+lea ebx,[edi+000004DC]
+
+"ps_game.exe"+90B26:
+mov al,[ebx+000004D8]
+
+"ps_game.exe"+90B5D:
+add edi,000004DC
+
+[DISABLE]
+"ps_game.exe"+90AF5:
+lea ebx,[edi+00000118]
+
+"ps_game.exe"+90B26:
+mov al,[ebx+00000114]
+
+"ps_game.exe"+90B5D:
+add edi,00000118
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>137</ID>
+          <Description>"ps_game.00490B80 - CUser::SendUseSPMP"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+90C8A:
+lea ebx,[edi+000004DC]
+
+"ps_game.exe"+90CBF:
+mov al,[ebx+000004D8]
+
+"ps_game.exe"+90D3E:
+add edi,000004DC
+
+[DISABLE]
+"ps_game.exe"+90C8A:
+lea ebx,[edi+00000118]
+
+"ps_game.exe"+90CBF:
+mov al,[ebx+00000114]
+
+"ps_game.exe"+90D3E:
+add edi,00000118
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>140</ID>
+          <Description>"ps_game.004911A0 - CUser::SendEnergyAllToParty"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+911AE:
+mov cl,[ebx+000004D8]
+
+[DISABLE]
+"ps_game.exe"+911AE:
+mov cl,[ebx+00000114]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>141</ID>
+          <Description>"ps_game.00491210 - CUser::SendEnergyAllMaxToParty"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+9124A:
+lea ebx,[edi+000004DC]
+
+"ps_game.exe"+9127B:
+mov al,[ebx+000004D8]
+
+"ps_game.exe"+912DA:
+add edi,000004DC
+
+[DISABLE]
+"ps_game.exe"+9124A:
+lea ebx,[edi+00000118]
+
+"ps_game.exe"+9127B:
+mov al,[ebx+00000114]
+
+"ps_game.exe"+912DA:
+add edi,00000118
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>144</ID>
+          <Description>"ps_game.00491300 - CUser::SendEnergyHPToParty"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+9130E:
+mov cl,[ebx+000004D8]
+
+[DISABLE]
+"ps_game.exe"+9130E:
+mov cl,[ebx+00000114]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>148</ID>
+          <Description>"ps_game.00491830 - CUser::SendSkillRemoveParty"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+91876:
+lea ebx,[esi+000004DC]
+
+"ps_game.exe"+918AB:
+mov al,[edx+000004D8]
+
+"ps_game.exe"+9190D:
+add esi,000004DC
+
+[DISABLE]
+"ps_game.exe"+91876:
+lea ebx,[esi+00000118]
+
+"ps_game.exe"+918AB:
+mov al,[edx+00000114]
+
+"ps_game.exe"+9190D:
+add esi,00000118
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>151</ID>
+          <Description>"ps_game.00491930"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+919C1:
+mov al,[ebx+000004D8]
+
+"ps_game.exe"+91A12:
+lea edi,[ebx+000004DC]
+
+[DISABLE]
+"ps_game.exe"+919C1:
+mov al,[ebx+00000114]
+
+"ps_game.exe"+91A12:
+lea edi,[ebx+00000118]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>145</ID>
+          <Description>"ps_game.004916B0 - CUser::SendSkillApply"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+91767:
+lea eax,[ebp+000004DC]
+
+"ps_game.exe"+917A4:
+mov al,[edx+000004D8]
+
+"ps_game.exe"+91807:
+add ebp,000004DC
+
+[DISABLE]
+"ps_game.exe"+91767:
+lea eax,[ebp+00000118]
+
+"ps_game.exe"+917A4:
+mov al,[edx+00000114]
+
+"ps_game.exe"+91807:
+add ebp,00000118
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>14</ID>
+          <Description>"ps_game.0049B120 - CUser::GetPartyType"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+9B131:
+lea edi,[esi+000004DC]
+
+"ps_game.exe"+9B15B:
+lea ebx,[edi+000004DC]
+
+"ps_game.exe"+9B184:
+add esi,000004DC
+
+"ps_game.exe"+9B1A6:
+add esi,000004DC
+
+"ps_game.exe"+9B1BF:
+add esi,000004DC
+
+[DISABLE]
+"ps_game.exe"+9B131:
+lea edi,[esi+00000118]
+
+"ps_game.exe"+9B15B:
+lea ebx,[edi+00000118]
+
+"ps_game.exe"+9B184:
+add esi,00000118
+
+"ps_game.exe"+9B1A6:
+add esi,00000118
+
+"ps_game.exe"+9B1BF:
+add esi,00000118
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>153</ID>
+          <Description>"ps_game.0049B1E0 - CUser::GetPartyID"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+9B1F3:
+lea edi,[esi+000004DC]
+
+"ps_game.exe"+9B21F:
+add esi,000004DC
+
+"ps_game.exe"+9B232:
+add esi,000004DC
+
+[DISABLE]
+"ps_game.exe"+9B1F3:
+lea edi,[esi+00000118]
+
+"ps_game.exe"+9B21F:
+add esi,00000118
+
+"ps_game.exe"+9B232:
+add esi,00000118
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>156</ID>
+          <Description>"ps_game.0049B9C0 - CUser::LevelUp"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+9BBEF:
+lea esi,[ebx+000004DC]
+
+"ps_game.exe"+9BC2D:
+mov al,[esi+000004D8]
+
+"ps_game.exe"+9BC84:
+add ebx,000004DC
+
+[DISABLE]
+"ps_game.exe"+9BBEF:
+lea esi,[ebx+00000118]
+
+"ps_game.exe"+9BC2D:
+mov al,[esi+00000114]
+
+"ps_game.exe"+9BC84:
+add ebx,00000118
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>565</ID>
+          <Description>"ps_game.0049DD50 - CUser::UpdateResetPosition"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+9E4C6:
+cmp byte ptr [ebx+000004D8],01
+
+"ps_game.exe"+9E589:
+add eax,000004DC
+
+[DISABLE]
+"ps_game.exe"+9E4C6:
+cmp byte ptr [ebx+00000114],01
+
+"ps_game.exe"+9E589:
+add eax,00000118
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>159</ID>
+          <Description>"ps_game.004A1C20 - CMob::Death"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+A1DAD:
+lea eax,[edi+000004DC]
+
+"ps_game.exe"+A1DBE:
+mov al,[edi+000004D8]
+
+"ps_game.exe"+A1E3C:
+mov eax,[edi+000004D0]
+
+"ps_game.exe"+A1F15:
+mov eax,[edi+000004D0]
+
+[DISABLE]
+"ps_game.exe"+A1DAD:
+lea eax,[edi+00000118]
+
+"ps_game.exe"+A1DBE:
+mov al,[edi+00000114]
+
+"ps_game.exe"+A1E3C:
+mov eax,[edi+0000010C]
+
+"ps_game.exe"+A1F15:
+mov eax,[edi+0000010C]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>161</ID>
+          <Description>"ps_game.004A1C20 - CMob::Death"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,128)
+label(returnhere)
+
+newmem:
+cmp esi,96
+jle ps_game.exe+A1E08
+jmp returnhere
+
+"ps_game.exe"+A1DFF:
+jmp newmem
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+"ps_game.exe"+A1DFF:
+cmp esi,1E
+jle ps_game.exe+A1E08
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>627</ID>
+          <Description>"ps_game.004A1C20 - CMob::Death"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+alloc(newmem,128)
+label(returnhere)
+
+newmem:
+cmp esi,96
+jle ps_game.exe+A1EE1
+jmp returnhere
+
+"ps_game.exe"+A1ED8:
+jmp newmem
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+"ps_game.exe"+A1ED8:
+cmp esi,1E
+jle ps_game.exe+A1EE1
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>190</ID>
+          <Description>"ps_game.004BA950 - CMob::ItemDrop"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+BA98B:
+cmp dword ptr [eax+000004C8],04
+
+[DISABLE]
+"ps_game.exe"+BA98B:
+cmp dword ptr [eax+00000104],04
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>191</ID>
+          <Description>"ps_game.004BAF80 - CMob::ItemDrop (overload)"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+BAFE2:
+cmp dword ptr [ebp+000004C8],04
+
+"ps_game.exe"+BB1DD:
+cmp byte ptr [ebp+000004D8],01
+
+"ps_game.exe"+BB1E6:
+cmp dword ptr [ebp+000004C8],04
+
+"ps_game.exe"+BB25B:
+mov eax,[ebp+000004C8]
+
+"ps_game.exe"+BB2F0:
+cmp [ebp+000004CC],eax
+
+"ps_game.exe"+BB2F8:
+mov [ebp+000004CC],00000000
+
+"ps_game.exe"+BB302:
+mov esi,[ebp+000004CC]
+
+"ps_game.exe"+BB327:
+mov [ebp+000004CC],esi
+
+"ps_game.exe"+BB370:
+inc [ebp+000004CC]
+
+"ps_game.exe"+BB397:
+cmp [ebp+000004CC],eax
+
+"ps_game.exe"+BB39F:
+mov [ebp+000004CC],00000000
+
+"ps_game.exe"+BB3A9:
+mov esi,[ebp+000004CC]
+
+"ps_game.exe"+BB3D3:
+mov [ebp+000004CC],esi
+
+"ps_game.exe"+BB424:
+inc [ebp+000004CC]
+
+[DISABLE]
+"ps_game.exe"+BAFE2:
+cmp dword ptr [ebp+00000104],04
+
+"ps_game.exe"+BB1DD:
+cmp byte ptr [ebp+00000114],01
+
+"ps_game.exe"+BB1E6:
+cmp dword ptr [ebp+00000104],04
+
+"ps_game.exe"+BB25B:
+mov eax,[ebp+00000104]
+
+"ps_game.exe"+BB2F0:
+cmp [ebp+00000108],eax
+
+"ps_game.exe"+BB2F8:
+mov [ebp+00000108],00000000
+
+"ps_game.exe"+BB302:
+mov esi,[ebp+00000108]
+
+"ps_game.exe"+BB327:
+mov [ebp+00000108],esi
+
+"ps_game.exe"+BB370:
+inc [ebp+00000108]
+
+"ps_game.exe"+BB397:
+cmp [ebp+00000108],eax
+
+"ps_game.exe"+BB39F:
+mov [ebp+00000108],00000000
+
+"ps_game.exe"+BB3A9:
+mov esi,[ebp+00000108]
+
+"ps_game.exe"+BB3D3:
+mov [ebp+00000108],esi
+
+"ps_game.exe"+BB424:
+inc [ebp+00000108]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>162</ID>
+          <Description>"ps_game.004C6A80 - CMob::PAI_Say"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+"ps_game.exe"+C6B30:
+add eax,000004DC
+
+"ps_game.exe"+C6B54:
+add eax,000004DC
+
+[DISABLE]
+"ps_game.exe"+C6B30:
+add eax,00000118
+
+"ps_game.exe"+C6B54:
+add eax,00000118
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
