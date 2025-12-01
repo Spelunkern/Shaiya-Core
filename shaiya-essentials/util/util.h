@@ -7,3 +7,5 @@ namespace util
     int write_memory(void* addr, const void* src, size_t size);
     int write_memory(void* addr, int value, size_t size);
 }
+// Raid
+extern int raid_pointer;
