@@ -16,6 +16,6 @@ You can refer to the original client code here:  https://github.com/Spelunkern/s
 
 ---
 
-⚠ Work in Progress
+⚠ 29 March Update ⚠
 
-The use of this repository is not recommended until the main project officially launches.
+Shaiya Core Project have been discontinuated and the repository remains as a stable reference; Essentials continues with a newer version instead in the near future.
