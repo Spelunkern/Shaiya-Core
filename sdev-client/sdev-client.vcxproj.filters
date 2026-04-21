@@ -44,6 +44,15 @@
     <ClInclude Include="include\shaiya\CCharacterChat.h">
       <Filter>include\shaiya</Filter>
     </ClInclude>
+    <ClInclude Include="include\shaiya\CButton.h">
+      <Filter>include\shaiya</Filter>
+    </ClInclude>
+    <ClInclude Include="include\shaiya\CMessage.h">
+      <Filter>include\shaiya</Filter>
+    </ClInclude>
+    <ClInclude Include="include\shaiya\CStatusMiniBar.h">
+      <Filter>include\shaiya</Filter>
+    </ClInclude>
     <ClInclude Include="include\shaiya\CDataFile.h">
       <Filter>include\shaiya</Filter>
     </ClInclude>
@@ -214,6 +223,9 @@
     <ClCompile Include="include\shaiya\CCharacter.cpp">
       <Filter>include\shaiya</Filter>
     </ClCompile>
+    <ClCompile Include="include\shaiya\CButton.cpp">
+      <Filter>include\shaiya</Filter>
+    </ClCompile>
     <ClCompile Include="include\shaiya\CDataFile.cpp">
       <Filter>include\shaiya</Filter>
     </ClCompile>
@@ -221,6 +233,9 @@
       <Filter>include\shaiya</Filter>
     </ClCompile>
     <ClCompile Include="include\shaiya\CMonster.cpp">
+      <Filter>include\shaiya</Filter>
+    </ClCompile>
+    <ClCompile Include="include\shaiya\CMessage.cpp">
       <Filter>include\shaiya</Filter>
     </ClCompile>
     <ClCompile Include="include\shaiya\CNetwork.cpp">
@@ -274,10 +289,22 @@
     <ClCompile Include="src\item_icon.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\main_stats.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="src\name_color.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\quick_slot.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\raid.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\resolutions.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\target_view.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\title.cpp">
@@ -300,5 +327,7 @@
     <ResourceCompile Include="resources\sdev.rc">
       <Filter>resources</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
   </ItemGroup>
 </Project>

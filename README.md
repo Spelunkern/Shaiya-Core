@@ -1,21 +1,63 @@
-# Shaiya-Core
-Core is an open-source project designed to provide a universal Shaiya base for running private servers. This repository contains the code used by the server (PSGame), login (PSLogin), database agent (PSDBAgent), and the client (Game.exe).
+# Shaiya Core
 
-As the spiritual successor to the Essentials project, Core aims to deliver a better development foundation — with fewer modifications and a focus on preserving the game’s original content.
+Shaiya Core is a C++ patching and extension project for Shaiya private-server research, preservation, and development.
 
-### Getting Started
-Please note that this repository is simply a merge of two existing projects (EP6 + Essentials) to offer a cleaner and easier-to-manage solution. If you prefer, you may compile each part separately from their original repositories.
+The repository contains server-side modules for `ps_game.exe`, client-side modules for `Game.exe`, shared packet/structure definitions, and small login/database-agent helpers. The goal is to keep binary patches practical, auditable, and easy to disable while documenting why each feature exists.
 
-### Server Code
-The server-side code does not receive direct modifications in this project; it remains a strict copy of the EP6 project without a single line changed, offering a stable and immutable version. If you want to keep the latest code updates, please keep using EP6 repository code instead.
-You can refer to the original server/login/agent code here:  https://github.com/kurtekat/shaiya-episode-6
+## Repository Layout
 
-### Client Code
-The client-side code does receive small, controlled updates. The original Essentials repository remains archived as an immutable and stable reference.
-You can refer to the original client code here:  https://github.com/Spelunkern/shaiya-essentials
+- `sdev/` - game-service/server hooks and gameplay fixes.
+- `sdev-client/` - `Game.exe` hooks, UI support, Unicode/chat fixes, and client quality-of-life patches.
+- `sdev-login/` - login-service hooks.
+- `sdev-db/` - database-agent hooks.
+- `shaiya/` - shared game structures, enums, and packet definitions.
+- `util/` - common memory patching helpers.
+- `external/` - vendored third-party code used by client features.
+- `mini-gmp/` - vendored dependency used by the project.
 
----
+## Build
 
-⚠ 29 March Update ⚠
+This project targets Windows, Visual Studio 2022/MSBuild, and x86 builds.
 
-Shaiya Core Project have been discontinuated and the repository remains as a stable reference; Essentials continues with a newer version instead in the near future.
+Server module:
+
+```powershell
+& 'C:\BuildTools\MSBuild\Current\Bin\MSBuild.exe' .\Shaiya-Core.sln /t:sdev /p:Configuration=Release /p:Platform=x86 /m
+```
+
+Client module:
+
+```powershell
+$env:DXSDK_DIR='C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\'
+& 'C:\BuildTools\MSBuild\Current\Bin\MSBuild.exe' .\Shaiya-Core.sln /t:sdev-client /p:Configuration=Release /p:Platform=x86 /m
+```
+
+Build outputs are ignored by git. Public releases should be built from a clean checkout and tested against the matching binaries.
+
+## Configuration
+
+Runtime behavior can depend on external files such as `CONFIG.INI`, PNG interface assets, and feature-specific INI files. Keep production secrets and server-specific data out of commits. Prefer documenting example values instead of committing live configuration.
+
+## Feature Documentation
+
+- Client features are documented in `sdev-client/README.md`.
+- Server features are documented in `sdev/README.md`.
+- Shared packet/structure notes are documented in `shaiya/README.md`.
+
+## Stability Notes
+
+Most patches are intentionally small and grouped by feature in code comments. Experimental or broken work should stay disabled and be documented as future work before the repository is published.
+
+Current known disabled future work:
+
+- Custom deterministic recreation runes: marked in code as `Future feature - broken right now`.
+
+## License
+
+This project's own code is licensed under the BSD 3-Clause License. See `LICENSE`.
+
+Third-party code keeps its original license terms. See `THIRD_PARTY_NOTICES.md`.
+
+## Disclaimer
+
+This project is provided as-is, without warranties. Test every patch in a controlled environment before using it in production.

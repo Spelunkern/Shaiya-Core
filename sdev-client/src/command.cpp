@@ -1,12 +1,239 @@
 #include <ranges>
+#include <atomic>
 #include <string>
+#include <thread>
 #include <vector>
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+#include <commdlg.h>
 #include <util/util.h>
 #include "include/main.h"
 #include "include/shaiya/Static.h"
 using namespace shaiya;
+
+namespace
+{
+    constexpr const char* kFontIniSection = "FONT";
+    constexpr const char* kFontHeightKey = "HEIGHT";
+    constexpr const char* kFontWeightKey = "WEIGHT";
+    constexpr const char* kFontItalicKey = "ITALIC";
+    constexpr const char* kFontFaceNameKey = "FACENAME";
+    constexpr int kDefaultFontHeight = 13;
+    constexpr const char* kDefaultFontFaceName = "Arial";
+
+    inline std::atomic_bool g_chooseFontWorkerBusy = false;
+
+    HRESULT create_d3dx_font(
+        LPDIRECT3DDEVICE9 device,
+        int height,
+        int weight,
+        BOOL italic,
+        const char* faceName,
+        LPD3DXFONT* outFont)
+    {
+        if (!device || !outFont)
+            return E_FAIL;
+
+        auto d3dx9 = GetModuleHandleA("d3dx9_43.dll");
+        if (!d3dx9)
+            d3dx9 = LoadLibraryA("d3dx9_43.dll");
+
+        if (!d3dx9)
+            return E_FAIL;
+
+        typedef HRESULT(WINAPI* LPFN)(
+            LPDIRECT3DDEVICE9,
+            INT,
+            UINT,
+            UINT,
+            UINT,
+            BOOL,
+            DWORD,
+            DWORD,
+            DWORD,
+            DWORD,
+            LPCSTR,
+            LPD3DXFONT*);
+
+        auto createFont = reinterpret_cast<LPFN>(GetProcAddress(d3dx9, "D3DXCreateFontA"));
+        if (!createFont)
+            return E_FAIL;
+
+        return createFont(
+            device,
+            height,
+            0,
+            weight,
+            1,
+            italic,
+            DEFAULT_CHARSET,
+            OUT_DEFAULT_PRECIS,
+            DEFAULT_QUALITY,
+            DEFAULT_PITCH | FF_DONTCARE,
+            faceName,
+            outFont);
+    }
+
+    bool apply_game_font(int height, int weight, BOOL italic, const char* faceName)
+    {
+        if (!g_var->camera.device || !faceName || !faceName[0])
+            return false;
+
+        auto newHFont = CreateFontA(
+            height,
+            0,
+            0,
+            0,
+            weight,
+            italic,
+            FALSE,
+            FALSE,
+            DEFAULT_CHARSET,
+            OUT_DEFAULT_PRECIS,
+            CLIP_DEFAULT_PRECIS,
+            DEFAULT_QUALITY,
+            DEFAULT_PITCH | FF_DONTCARE,
+            faceName);
+
+        if (!newHFont)
+            return false;
+
+        auto oldHFont = g_var->camera.hFont;
+        g_var->camera.hFont = newHFont;
+        if (oldHFont)
+            DeleteObject(oldHFont);
+
+        auto swapD3dxFont = [&](LPD3DXFONT& slot) {
+            LPD3DXFONT newFont = nullptr;
+            if (FAILED(create_d3dx_font(g_var->camera.device, height, weight, italic, faceName, &newFont)))
+                return;
+
+            auto oldFont = slot;
+            slot = newFont;
+            if (oldFont)
+                oldFont->Release();
+        };
+
+        // The client renders text through several camera font slots. Updating
+        // all of them makes /font affect UI labels, counters, chat-adjacent
+        // overlays, and the native text helpers instead of only one subset.
+        swapD3dxFont(g_var->camera.d3dxFont3);
+        swapD3dxFont(g_var->camera.d3dxFont2);
+        swapD3dxFont(g_var->camera.d3dxFont1);
+        swapD3dxFont(g_var->camera.d3dxFont0);
+
+        return true;
+    }
+
+    void save_game_font(int height, int weight, BOOL italic, const char* faceName)
+    {
+        WritePrivateProfileStringA(kFontIniSection, kFontHeightKey, std::to_string(height).c_str(), g_var->iniFileName.data());
+        WritePrivateProfileStringA(kFontIniSection, kFontWeightKey, std::to_string(weight).c_str(), g_var->iniFileName.data());
+        WritePrivateProfileStringA(kFontIniSection, kFontItalicKey, std::to_string(italic ? 1 : 0).c_str(), g_var->iniFileName.data());
+        WritePrivateProfileStringA(kFontIniSection, kFontFaceNameKey, faceName, g_var->iniFileName.data());
+    }
+
+    void load_game_font_config()
+    {
+        auto height = GetPrivateProfileIntA(kFontIniSection, kFontHeightKey, kDefaultFontHeight, g_var->iniFileName.data());
+        auto weight = GetPrivateProfileIntA(kFontIniSection, kFontWeightKey, FW_NORMAL, g_var->iniFileName.data());
+        auto italic = GetPrivateProfileIntA(kFontIniSection, kFontItalicKey, FALSE, g_var->iniFileName.data()) ? TRUE : FALSE;
+
+        std::string faceName(LF_FACESIZE, '\0');
+        GetPrivateProfileStringA(kFontIniSection, kFontFaceNameKey, kDefaultFontFaceName, faceName.data(), static_cast<DWORD>(faceName.size()), g_var->iniFileName.data());
+        faceName.resize(std::strlen(faceName.c_str()));
+
+        apply_game_font(height, weight, italic, faceName.c_str());
+    }
+
+    void wait_and_load_game_font_config()
+    {
+        for (int attempt = 0; attempt < 200; ++attempt)
+        {
+            if (g_var->camera.device)
+            {
+                load_game_font_config();
+                return;
+            }
+
+            Sleep(100);
+        }
+    }
+
+    void choose_font_worker()
+    {
+        g_chooseFontWorkerBusy.store(true);
+
+        LOGFONTA lf{};
+        lf.lfHeight = GetPrivateProfileIntA(kFontIniSection, kFontHeightKey, kDefaultFontHeight, g_var->iniFileName.data());
+        lf.lfWeight = GetPrivateProfileIntA(kFontIniSection, kFontWeightKey, FW_NORMAL, g_var->iniFileName.data());
+        lf.lfItalic = GetPrivateProfileIntA(kFontIniSection, kFontItalicKey, FALSE, g_var->iniFileName.data()) ? TRUE : FALSE;
+        lf.lfCharSet = DEFAULT_CHARSET;
+        GetPrivateProfileStringA(kFontIniSection, kFontFaceNameKey, kDefaultFontFaceName, lf.lfFaceName, LF_FACESIZE, g_var->iniFileName.data());
+
+        CHOOSEFONTA cf{};
+        cf.lStructSize = sizeof(CHOOSEFONTA);
+        cf.hwndOwner = g_var->hwnd;
+        cf.lpLogFont = &lf;
+        cf.Flags = CF_INITTOLOGFONTSTRUCT
+            | CF_FORCEFONTEXIST
+            | CF_LIMITSIZE
+            | CF_SCREENFONTS
+            | CF_NOSCRIPTSEL
+            | CF_NOSIMULATIONS
+            | CF_NOVERTFONTS;
+        cf.nSizeMin = 8;
+        cf.nSizeMax = 14;
+
+        if (ChooseFontA(&cf))
+        {
+            auto italic = cf.lpLogFont->lfItalic ? TRUE : FALSE;
+            if (apply_game_font(cf.lpLogFont->lfHeight, cf.lpLogFont->lfWeight, italic, cf.lpLogFont->lfFaceName))
+                save_game_font(cf.lpLogFont->lfHeight, cf.lpLogFont->lfWeight, italic, cf.lpLogFont->lfFaceName);
+        }
+
+        g_chooseFontWorkerBusy.store(false);
+    }
+
+    void apply_effects_setting(bool enabled)
+    {
+        g_showEffects = enabled;
+        g_showMobEffects = enabled;
+        WritePrivateProfileStringA("ADVANCED", "EFFECTS", enabled ? "TRUE" : "FALSE", g_var->iniFileName.data());
+    }
+
+    void apply_pets_setting(bool enabled)
+    {
+        g_showMobEffects = enabled;
+        g_showPets = enabled;
+        WritePrivateProfileStringA("ADVANCED", "PETS", enabled ? "TRUE" : "FALSE", g_var->iniFileName.data());
+    }
+
+    void apply_wings_setting(bool enabled)
+    {
+        g_showWings = enabled;
+        WritePrivateProfileStringA("ADVANCED", "WINGS", enabled ? "TRUE" : "FALSE", g_var->iniFileName.data());
+    }
+
+    void apply_fpsboost_setting(bool enabled)
+    {
+        // Keep the behavior aligned with the existing command semantics.
+        g_fpsBoost = enabled ? 0 : 1;
+        WritePrivateProfileStringA("ADVANCED", "FPS_BOOST", enabled ? "TRUE" : "FALSE", g_var->iniFileName.data());
+    }
+
+    void apply_titles_setting(bool enabled)
+    {
+        g_showTitles = enabled;
+        WritePrivateProfileStringA("ADVANCED", "TITLES", enabled ? "TRUE" : "FALSE", g_var->iniFileName.data());
+    }
+
+    void apply_colour_setting(bool enabled)
+    {
+        g_showNameColors = enabled;
+        WritePrivateProfileStringA("ADVANCED", "COLOUR", enabled ? "TRUE" : "FALSE", g_var->iniFileName.data());
+    }
+}
 
 void load_advanced_config()
 {
@@ -23,6 +250,32 @@ void load_advanced_config()
     GetPrivateProfileStringA("ADVANCED", "PETS", "TRUE", str.data(), str.size(), g_var->iniFileName.data());
     g_showPets = str.compare(0, 4, "TRUE") == 0;
     g_showMobEffects = g_showPets;
+
+    GetPrivateProfileStringA("ADVANCED", "FPS_BOOST", "FALSE", str.data(), str.size(), g_var->iniFileName.data());
+    g_fpsBoost = str.compare(0, 4, "TRUE") == 0;
+
+    GetPrivateProfileStringA("ADVANCED", "TITLES", "TRUE", str.data(), str.size(), g_var->iniFileName.data());
+    g_showTitles = str.compare(0, 4, "TRUE") == 0;
+
+    GetPrivateProfileStringA("ADVANCED", "COLOUR", "TRUE", str.data(), str.size(), g_var->iniFileName.data());
+    g_showNameColors = str.compare(0, 4, "TRUE") == 0;
+}
+
+bool is_performance_mode_enabled()
+{
+    return g_showEffects == 0
+        && g_showPets == 0
+        && g_showWings == 0
+        && g_showMobEffects == 0
+        && g_fpsBoost == 0;
+}
+
+void set_performance_mode(bool enabled)
+{
+    apply_effects_setting(!enabled);
+    apply_pets_setting(!enabled);
+    apply_wings_setting(!enabled);
+    apply_fpsboost_setting(enabled);
 }
 
 int command_handler(char* text)
@@ -43,47 +296,37 @@ int command_handler(char* text)
 
     if (input == "/effects on")
     {
-        g_showEffects = true;
-        g_showMobEffects = true;
-        WritePrivateProfileStringA("ADVANCED", "EFFECTS", "TRUE", g_var->iniFileName.data());
+        apply_effects_setting(true);
         return 0;
     }
 
     if (input == "/effects off")
     {
-        g_showEffects = false;
-        g_showMobEffects = false;
-        WritePrivateProfileStringA("ADVANCED", "EFFECTS", "FALSE", g_var->iniFileName.data());
+        apply_effects_setting(false);
         return 0;
     }
 
     if (input == "/pets on")
     {
-        g_showMobEffects = true;
-        g_showPets = true;
-        WritePrivateProfileStringA("ADVANCED", "PETS", "TRUE", g_var->iniFileName.data());
+        apply_pets_setting(true);
         return 0;
     }
 
     if (input == "/pets off")
     {
-        g_showMobEffects = false;
-        g_showPets = false;
-        WritePrivateProfileStringA("ADVANCED", "PETS", "FALSE", g_var->iniFileName.data());
+        apply_pets_setting(false);
         return 0;
     }
 
     if (input == "/wings on")
     {
-        g_showWings = true;
-        WritePrivateProfileStringA("ADVANCED", "WINGS", "TRUE", g_var->iniFileName.data());
+        apply_wings_setting(true);
         return 0;
     }
 
     if (input == "/wings off")
     {
-        g_showWings = false;
-        WritePrivateProfileStringA("ADVANCED", "WINGS", "FALSE", g_var->iniFileName.data());
+        apply_wings_setting(false);
         return 0;
     }
 
@@ -98,6 +341,51 @@ int command_handler(char* text)
     {
         g_showCostumes = false;
         WritePrivateProfileStringA("ADVANCED", "COSTUMES", "FALSE", g_var->iniFileName.data());
+        return 0;
+    }
+
+    if (input == "/fpsboost on")
+    {
+        apply_fpsboost_setting(true);
+        return 0;
+    }
+
+    if (input == "/fpsboost off")
+    {
+        apply_fpsboost_setting(false);
+        return 0;
+    }
+
+    if (input == "/font")
+    {
+        if (g_chooseFontWorkerBusy.load())
+            return 0;
+
+        std::thread(choose_font_worker).detach();
+        return 0;
+    }
+
+    if (input == "/titles on")
+    {
+        apply_titles_setting(true);
+        return 0;
+    }
+
+    if (input == "/titles off")
+    {
+        apply_titles_setting(false);
+        return 0;
+    }
+
+    if (input == "/colour on" || input == "/color on")
+    {
+        apply_colour_setting(true);
+        return 0;
+    }
+
+    if (input == "/colour off" || input == "/color off")
+    {
+        apply_colour_setting(false);
         return 0;
     }
 
@@ -299,8 +587,28 @@ void __declspec(naked) naked_0x41F816()
     }
 }
 
+unsigned u0x580D36 = 0x580D36;
+unsigned u0x580DCE = 0x580DCE;
+void __declspec(naked) naked_0x580D30()
+{
+    __asm
+    {
+        cmp dword ptr [g_fpsBoost], 1
+        jne disabled
+
+        push ebx
+        mov ebx, 0x007B19B0
+        jmp u0x580D36
+
+        disabled:
+        jmp u0x580DCE
+    }
+}
+
 void hook::command()
 {
+    std::thread(wait_and_load_game_font_config).detach();
+
     // get client config
     util::detour((void*)0x4094AD, naked_0x4094AD, 5);
     // commands
@@ -318,4 +626,6 @@ void hook::command()
     util::detour((void*)0x41F816, naked_0x41F816, 7);
     // show or hide mob effects
     util::detour((void*)0x43A142, naked_0x43A142, 5);
+    // fps boost
+    util::detour((void*)0x580D30, naked_0x580D30, 6);
 }

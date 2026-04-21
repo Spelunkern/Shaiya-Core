@@ -6,6 +6,23 @@ using namespace shaiya;
 
 namespace packet
 {
+    void patch_quantity_limit()
+    {
+        static constexpr unsigned int kQuantityHookAddr = 0x42E117;
+        static constexpr unsigned int kQuantityPatchAddr = 0x42E127;
+        static constexpr unsigned char kCmpBytes[] = {0x3D, 0xFF, 0x00, 0x00, 0x00};
+        static constexpr unsigned char kNopBytes[] = {0x90, 0x90, 0x90};
+        static constexpr unsigned char kMovBytes[] = {0xFF, 0x00, 0x00, 0x00};
+
+        // Raise the client-side buy/sell quantity limit from 10 to 255.
+        // cmp eax,0x0A -> cmp eax,0xFF
+        util::write_memory((void*)kQuantityHookAddr, kCmpBytes, sizeof(kCmpBytes));
+        // Clear the remaining bytes from the original instruction block.
+        util::write_memory((void*)(kQuantityHookAddr + 5), kNopBytes, sizeof(kNopBytes));
+        // mov [esi+1D58],0x0A -> mov [esi+1D58],0xFF
+        util::write_memory((void*)(kQuantityPatchAddr + 6), kMovBytes, sizeof(kMovBytes));
+    }
+
     // Resolves an issue with disguise removal
     void hook_0x303(CCharacter* user)
     {
@@ -114,6 +131,8 @@ void __declspec(naked) naked_0x593D0F()
 
 void hook::packet()
 {
+    // Increase the buy/sell item quantity limit from 10 to 255.
+    packet::patch_quantity_limit();
     // disguise removal bug (0x303 handler)
     util::detour((void*)0x5933F8, naked_0x5933F8, 6);
     // appearance/sex change bug (0x226 handler)

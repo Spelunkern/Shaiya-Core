@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="include\rapidjson">
+      <UniqueIdentifier>{c18792c7-ec60-4434-9e24-482eabbedac8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\rapidjson\error">
+      <UniqueIdentifier>{686d22de-387d-4985-bb33-784f6e44f964}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\rapidjson\internal">
+      <UniqueIdentifier>{b4f75f57-8e15-4e8d-9e89-912a7cb54112}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\rapidjson\msinttypes">
+      <UniqueIdentifier>{8f91d4c2-cba3-4951-885d-06921e7da525}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\backoff.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\connection.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\msg_queue.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rpc_connection.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\serialization.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="include\discord_register.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\discord_rpc.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidjson\allocators.h">
+      <Filter>include\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidjson\document.h">
+      <Filter>include\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidjson\encodedstream.h">
+      <Filter>include\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidjson\encodings.h">
+      <Filter>include\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidjson\filereadstream.h">
+      <Filter>include\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidjson\filewritestream.h">
+      <Filter>include\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidjson\fwd.h">
+      <Filter>include\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidjson\istreamwrapper.h">
+      <Filter>include\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidjson\memorybuffer.h">
+      <Filter>include\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidjson\memorystream.h">
+      <Filter>include\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidjson\ostreamwrapper.h">
+      <Filter>include\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidjson\pointer.h">
+      <Filter>include\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidjson\prettywriter.h">
+      <Filter>include\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidjson\rapidjson.h">
+      <Filter>include\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidjson\reader.h">
+      <Filter>include\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidjson\schema.h">
+      <Filter>include\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidjson\stream.h">
+      <Filter>include\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidjson\stringbuffer.h">
+      <Filter>include\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidjson\writer.h">
+      <Filter>include\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidjson\error\en.h">
+      <Filter>include\rapidjson\error</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidjson\error\error.h">
+      <Filter>include\rapidjson\error</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidjson\internal\biginteger.h">
+      <Filter>include\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidjson\internal\diyfp.h">
+      <Filter>include\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidjson\msinttypes\inttypes.h">
+      <Filter>include\rapidjson\msinttypes</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidjson\msinttypes\stdint.h">
+      <Filter>include\rapidjson\msinttypes</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidjson\internal\ieee754.h">
+      <Filter>include\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidjson\internal\dtoa.h">
+      <Filter>include\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidjson\internal\itoa.h">
+      <Filter>include\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidjson\internal\meta.h">
+      <Filter>include\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidjson\internal\pow10.h">
+      <Filter>include\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidjson\internal\regex.h">
+      <Filter>include\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidjson\internal\stack.h">
+      <Filter>include\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidjson\internal\strfunc.h">
+      <Filter>include\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidjson\internal\strtod.h">
+      <Filter>include\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidjson\internal\swap.h">
+      <Filter>include\rapidjson\internal</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\connection_win.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\discord_register_win.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\discord_rpc.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rpc_connection.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\serialization.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

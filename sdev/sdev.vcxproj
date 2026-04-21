@@ -26,7 +26,6 @@
     <ClCompile Include="include\shaiya\ItemHelper.cpp" />
     <ClCompile Include="include\shaiya\MyShop.cpp" />
     <ClCompile Include="include\shaiya\NetworkHelper.cpp" />
-    <ClCompile Include="include\shaiya\RevengeMark.cpp" />
     <ClCompile Include="include\shaiya\RewardItem.cpp" />
     <ClCompile Include="include\shaiya\SBinaryReader.cpp" />
     <ClCompile Include="include\shaiya\SConnection.cpp" />
@@ -53,7 +52,9 @@
     <ClCompile Include="src\dllmain.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\packet_gem.cpp" />
+    <ClCompile Include="src\raid_150.cpp" />
     <ClCompile Include="src\packet_shop.cpp" />
+    <ClCompile Include="src\utilities.cpp" />
     <ClCompile Include="src\user_skill.cpp" />
     <ClCompile Include="src\user_status.cpp" />
     <ClCompile Include="src\user_shape.cpp" />
@@ -69,6 +70,7 @@
     <ClInclude Include="include\shaiya\Attack.h" />
     <ClInclude Include="include\shaiya\AttackAdd.h" />
     <ClInclude Include="include\shaiya\AttackMob.h" />
+    <ClInclude Include="include\shaiya\BattlefieldMoveInfo.h" />
     <ClInclude Include="include\shaiya\BillingItemInfo.h" />
     <ClInclude Include="include\shaiya\BlockInfo.h" />
     <ClInclude Include="include\shaiya\CBitArray.h" />
@@ -130,7 +132,6 @@
     <ClInclude Include="include\shaiya\ItemHelper.h" />
     <ClInclude Include="include\shaiya\ItemInfo.h" />
     <ClInclude Include="include\shaiya\ItemPredicate.h" />
-    <ClInclude Include="include\shaiya\ItemRemake.h" />
     <ClInclude Include="include\shaiya\KillCountInfo.h" />
     <ClInclude Include="include\shaiya\MapBind.h" />
     <ClInclude Include="include\shaiya\MapBoss.h" />
@@ -162,7 +163,6 @@
     <ClInclude Include="include\shaiya\QuestLink.h" />
     <ClInclude Include="include\shaiya\QuestResult.h" />
     <ClInclude Include="include\shaiya\Quick.h" />
-    <ClInclude Include="include\shaiya\RevengeMark.h" />
     <ClInclude Include="include\shaiya\RewardItem.h" />
     <ClInclude Include="include\shaiya\SAes.h" />
     <ClInclude Include="include\shaiya\SBinaryReader.h" />

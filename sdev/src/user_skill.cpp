@@ -350,6 +350,28 @@ void __declspec(naked) naked_0x465087()
     }
 }
 
+unsigned u0x45CDBD = 0x45CDBD;
+void __declspec(naked) naked_0x45CDB5()
+{
+    __asm
+    {
+        mov ebp,[ebx+0x1300]
+        cmp cx,bp
+        jmp u0x45CDBD
+    }
+}
+
+unsigned u0x45DEBF = 0x45DEBF;
+void __declspec(naked) naked_0x45DEB7()
+{
+    __asm
+    {
+        mov edi,[ebp+0x1300]
+        cmp dx,di
+        jmp u0x45DEBF
+    }
+}
+
 void hook::user_skill()
 {
     // CUser::SkillAttackRange
@@ -366,4 +388,7 @@ void hook::user_skill()
     util::detour((void*)0x4959A4, naked_0x4959A4, 7);
     // CUser::AddExpFromUser
     util::detour((void*)0x465087, naked_0x465087, 5);
+    //  Spell Cooldown fix - The server now defines the true value instead of fixed 500s
+    util::detour((void*)0x45CDB5, naked_0x45CDB5, 8);
+    util::detour((void*)0x45DEB7, naked_0x45DEB7, 8);
 }

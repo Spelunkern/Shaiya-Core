@@ -1,4 +1,4 @@
-#include <map>
+#include <windows.h>
 #include <util/util.h>
 #include "include/main.h"
 #include "include/shaiya/CCharacter.h"
@@ -10,69 +10,86 @@ using namespace shaiya;
 
 namespace name_color
 {
-    const std::map<uint16_t, HexColor> g_itemRangeToColor
+    constexpr uint16_t kRainbowNameRange = 11;
+
+    D3DCOLOR make_rgb_color(uint8_t red, uint8_t green, uint8_t blue)
     {
-        { 1, HexColor::LightBlue },
-        { 2, HexColor::Blue },
-        { 3, HexColor::Green },
-        { 4, HexColor::Yellow },
-        { 5, HexColor::Orange },
-        { 6, HexColor::Red },
-        { 7, HexColor::Pink },
-        { 8, HexColor::Purple },
-        { 9, HexColor::Gray },
-        { 10, HexColor::Black },
-        { 11, HexColor::Cyan },
-        { 12, HexColor::Magenta },
-        { 13, HexColor::Brown },
-        { 14, HexColor::Lime },
-        { 15, HexColor::Olive },
-        { 16, HexColor::Maroon },
-        { 17, HexColor::Navy },
-        { 18, HexColor::Teal },
-        { 19, HexColor::Silver },
-        { 20, HexColor::Gold },
-        { 21, HexColor::Crimson },
-        { 22, HexColor::Khaki },
-        { 23, HexColor::Lavender },
-        { 24, HexColor::Peach },
-        { 25, HexColor::Coral },
-        { 26, HexColor::Salmon },
-        { 27, HexColor::Mint },
-        { 28, HexColor::Beige },
-        { 29, HexColor::Plum },
-        { 30, HexColor::Orchid },
-        { 31, HexColor::Rose },
-        { 32, HexColor::Wheat },
-        { 33, HexColor::Azure },
-        { 34, HexColor::Ivory },
-        { 35, HexColor::Snow },
-        { 36, HexColor::Honeydew },
-        { 37, HexColor::LimeGreen },
-        { 38, HexColor::LightCoral },
-        { 39, HexColor::LightPink },
-        { 40, HexColor::SeaGreen },
-        { 41, HexColor::SkyBlue },
-        { 42, HexColor::SlateGray },
-        { 43, HexColor::Turquoise },
-        { 44, HexColor::VioletRed },
-        { 45, HexColor::SpringGreen },
-        { 46, HexColor::Chartreuse },
-        { 47, HexColor::Sienna },
-        { 48, HexColor::SlateBlue },
-        { 49, HexColor::SteelBlue },
-        { 50, HexColor::Tomato },
-        { 51, HexColor::DarkRed },
-        { 52, HexColor::DarkOrange },
-        { 53, HexColor::DarkViolet },
-        { 54, HexColor::LightYellow },
-        { 55, HexColor::LightCyan },
-        { 56, HexColor::PapayaWhip },
-        { 57, HexColor::Moccasin },
-        { 58, HexColor::NavajoWhite },
-        { 59, HexColor::LemonChiffon },
-        { 60, HexColor::MistyRose }
-    };
+        return 0xFF000000
+            | (static_cast<D3DCOLOR>(red) << 16)
+            | (static_cast<D3DCOLOR>(green) << 8)
+            | static_cast<D3DCOLOR>(blue);
+    }
+
+    D3DCOLOR get_rainbow_name_color()
+    {
+        auto phase = (GetTickCount() / 450) % 6;
+        auto step = static_cast<uint8_t>((GetTickCount() % 450) * 255 / 450);
+        auto inverse = static_cast<uint8_t>(255 - step);
+
+        switch (phase)
+        {
+        case 0:
+            return make_rgb_color(255, step, 0);
+        case 1:
+            return make_rgb_color(inverse, 255, 0);
+        case 2:
+            return make_rgb_color(0, 255, step);
+        case 3:
+            return make_rgb_color(0, inverse, 255);
+        case 4:
+            return make_rgb_color(step, 0, 255);
+        default:
+            return make_rgb_color(255, 0, inverse);
+        }
+    }
+
+    D3DCOLOR get_custom_color(uint16_t range)
+    {
+        switch (range)
+        {
+        case 1:
+            return std::to_underlying(HexColor::Red);
+        case 2:
+            return std::to_underlying(HexColor::DodgerBlue);
+        case 3:
+            return std::to_underlying(HexColor::Green);
+        case 4:
+            return std::to_underlying(HexColor::Yellow);
+        case 5:
+            return std::to_underlying(HexColor::Orange);
+        case 6:
+            return std::to_underlying(HexColor::Purple);
+        case 7:
+            return std::to_underlying(HexColor::Pink);
+        case 8:
+            return std::to_underlying(HexColor::Cyan);
+        case 9:
+            return std::to_underlying(HexColor::Gold);
+        case 10:
+            return std::to_underlying(HexColor::Silver);
+        case kRainbowNameRange:
+            return get_rainbow_name_color();
+        default:
+            return 0;
+        }
+    }
+
+    bool is_name_color_helmet(const ItemInfo* itemInfo)
+    {
+        if (!itemInfo)
+            return false;
+
+        switch (itemInfo->type)
+        {
+        case 16:
+        case 31:
+        case 72:
+        case 87:
+            return true;
+        default:
+            return false;
+        }
+    }
 
     HexColor get_mob_name_color(int mobLevel)
     {
@@ -105,6 +122,9 @@ namespace name_color
 
     D3DCOLOR get_helmet_name_color(CCharacter* user)
     {
+        if (!g_showNameColors)
+            return 0;
+
         auto helmetType = user->equipment.type[ItemSlot::Helmet];
         auto helmetTypeId = user->equipment.typeId[ItemSlot::Helmet];
 
@@ -112,16 +132,10 @@ namespace name_color
         if (!itemInfo)
             return 0;
 
-        if (!itemInfo->range)
+        if (!is_name_color_helmet(itemInfo) || !itemInfo->range)
             return 0;
 
-        for (const auto& [range, color] : g_itemRangeToColor)
-        {
-            if (range == itemInfo->range)
-                return std::to_underlying(color);
-        }
-
-        return 0;
+        return get_custom_color(itemInfo->range);
     }
 }
 
@@ -146,8 +160,8 @@ void __declspec(naked) naked_0x4E50D0()
     }
 }
 
-unsigned u0x453821 = 0x453821;
-void __declspec(naked) naked_0x45381B()
+unsigned u0x453CE1 = 0x453CE1;
+void __declspec(naked) naked_0x453CDB()
 {
     __asm
     {
@@ -169,8 +183,8 @@ void __declspec(naked) naked_0x45381B()
         mov ebp,eax
 
         original:
-        cmp dword ptr ds:[0x22AA7F8],ebx
-        jmp u0x453821
+        mov edi,dword ptr [esi+0x314]
+        jmp u0x453CE1
     }
 }
 
@@ -178,7 +192,8 @@ void hook::name_color()
 {
     // mobs
     util::detour((void*)0x4E50D0, naked_0x4E50D0, 5);
-    // users
-    util::detour((void*)0x45381B, naked_0x45381B, 6);
+    // users: apply helmet-driven name color immediately before char name draw,
+    // after the stock admin/party/faction/PvP color decisions are finished.
+    util::detour((void*)0x453CDB, naked_0x453CDB, 6);
 }
 

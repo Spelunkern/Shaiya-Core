@@ -26,6 +26,21 @@ https://github.com/kurtekat/shaiya-episode-6/tree/main/sdev/bin/
 
 All features are implemented based on client specifications. The intent is to keep everything as vanilla as possible.
 
+## Stable Server Patch Groups
+
+- Cross-faction whisper, trade, inspect, login, and world-enter support.
+- Guild quality-of-life patches: officer limit, penalty removal, repeat GRB entry, and 2-player guild creation.
+- Security sanitizers for command, character, and guild strings before DB-bound paths.
+- Raid 150 component for expanded raid/party support.
+- Rune cutting fixes for arena, auction house, capital, and guild map paths.
+- Direct solo gold/item drops, optional gold bonus settings, and Fortune Bag inventory stacking.
+- Boss death/spawn notices, instant mounts, revive with max HP/MP/SP, and death-skill trigger.
+- Infinite consumables for explicitly listed unsellable item IDs.
+- Spell cooldown fix for Ability Type 19 so the server uses the real value instead of the fixed 500s fallback.
+- Stabilized Obelisk.ini spawn timing with the one-hour randomizer removed.
+- Cloaks contributing real defense/resistance, off-hand support, stealth running, mantle drop fixes, and mantle packet hardening.
+- Battleground movement support using the normal cast/update flow.
+
 ## Item Mall
 
 Install the following procedures:
@@ -125,112 +140,7 @@ The client expects the merchant type of the npc to be 20 (Alchemist).
 |---------|-----------|
 | 1       | 310       |
 
-### Lapis Combination
-
-The client expects the remake items to be the same. Use the following example to get started:
-
-```ini
-; PSM_Client\Bin\Data\ItemRemake5.ini
-
-[ItemRemake_1]
-ItemID1=30005
-ItemID2=30005
-ItemID3=30005
-NewItemType=30
-NewItemTypeID=6
-
-[ItemRemake_2]
-ItemID1=30012
-ItemID2=30012
-ItemID3=30012
-NewItemType=30
-NewItemTypeID=13
-
-[ItemRemake_3]
-ItemID1=30019
-ItemID2=30019
-ItemID3=30019
-NewItemType=30
-NewItemTypeID=20
-
-[ItemRemake_4]
-ItemID1=30026
-ItemID2=30026
-ItemID3=30026
-NewItemType=30
-NewItemTypeID=27
-
-[ItemRemake_5]
-ItemID1=30033
-ItemID2=30033
-ItemID3=30033
-NewItemType=30
-NewItemTypeID=34
-
-[ItemRemake_6]
-ItemID1=30040
-ItemID2=30040
-ItemID3=30040
-NewItemType=30
-NewItemTypeID=41
-```
-
-Lapis combination requires 1 Crowley Essence for each `ReqIg` value greater than or equal to 36. The client does not allow more than one lapis from the same stack. `ReqIg` values 30 and 99 are not allowed.
-
-| ItemID | ItemName        | ItemEffect |
-|--------|-----------------|------------|
-| 100247 | Crowley Essence | 85         |
-
-### Lapisian Combination
-
-The client expects the remake items to be the same. Use the following example to get started:
-
-```ini
-; PSM_Client\Bin\Data\ItemRemake4.ini
-
-[ItemRemake_1]
-ItemID1=95001
-ItemID2=95001
-ItemID3=95001
-NewItemType=95
-NewItemTypeID=2
-
-[ItemRemake_2]
-ItemID1=95006
-ItemID2=95006
-ItemID3=95006
-NewItemType=95
-NewItemTypeID=7
-
-[ItemRemake_3]
-ItemID1=95002
-ItemID2=95002
-ItemID3=95002
-NewItemType=95
-NewItemTypeID=4
-
-[ItemRemake_4]
-ItemID1=95007
-ItemID2=95007
-ItemID3=95007
-NewItemType=95
-NewItemTypeID=9
-```
-
-Lapisian combination requires 1 Crowley Liquid. The client does not allow more than one lapisian from the same stack.
-
-| ItemID | ItemName        | ItemEffect |
-|--------|-----------------|------------|
-| 100248 | Crowley Liquid  | 92         |
-
 ## Rune Combination
-
-The function that adds support for recreation runes is disabled by default because of Cheat Engine scripts.
-
-```cpp
-// sdev\src\packet_gem.cpp
-//#define SHAIYA_EP6_4_ENABLE_0806_HANDLER
-```
 
 The following items are supported:
 
@@ -250,41 +160,31 @@ The following items are supported:
 | ItemId | Effect |
 |--------|--------|
 | 100171 | 62     |
-| 101001 | 86     |
-| 101002 | 87     |
-| 101003 | 88     |
-| 101004 | 89     |
-| 101005 | 90     |
-| 101006 | 91     |
+
+Custom deterministic recreation runes are currently disabled.
+
+Status: **Future feature - broken right now**
+
+The server currently preserves vanilla random recreation behavior for effect `62`. Do not publish custom deterministic rune data as a supported feature until the server-side item data contract is proven and retested.
+
+Historical design notes are kept here for future work only. The intended selector was:
+
+| ReqVg | Result |
+|-------|--------|
+| 1     | Max STR |
+| 2     | Max DEX |
+| 3     | Max INT |
+| 4     | Max WIS |
+| 5     | Max REC |
+| 6     | Max LUC |
+| 7     | Max HP |
+| 8     | Max MP |
+| 9     | Max SP |
+| 10    | Remove all craft stats |
 
 ## NpcQuest
 
 The episode 6 format has 6 quest results, each containing up to 3 items. The game service executable has been modified to read the file format.
-
-## Revenge Mark
-
-The kill count will determine which effect(s) will be rendered. The library will increment the kill count until 999.
-
-| KillCount | EffectName                | EffectDataId |
-|-----------|---------------------------|--------------|
-| 1         | RevengeMark_Loop_01.EFT   | 265          |     
-| 2         | RevengeMark_Loop_02.EFT   | 266          |
-| 3         | RevengeMark_Loop_03.EFT   | 267          |
-| 4         | RevengeMark_Loop_04.EFT   | 268          |
-| 5         | RevengeMark_Loop_05.EFT   | 269          |
-| 6         | RevengeMark_Loop_06.EFT   | 270          |
-| 7         | RevengeMark_Loop_07.EFT   | 271          |
-| 8-999     | RevengeMark_Loop_08.EFT   | 272          |
-| odd       | RevengeMark_Notice_01.EFT | 262          |
-| even      | RevengeMark_Notice_02.EFT | 263          |
-| 999       | RevengeMark_Notice_03.EFT | 264          |
-
-The client library adds support for system message 509.
-
-```
-508		"Your revenge to <t> has succeeded!"
-509		"<t> killed  you <v> time(s)."
-```
 
 ## Skill Abilities
 
@@ -477,7 +377,15 @@ The values are signed 32-bit integers, expected to be in the following order:
 
 ## Item Ability Transfer
 
-Use item `101150` to activate the window. The `CraftName` and `Gems` will be removed from the original item if the transfer is successful.
+Use item `101150` directly from the inventory. This system does not use the client transfer window.
+
+Inventory layout:
+
+* slot 1 = source item
+* slot 2 = transfer cube
+* slot 3 = target item
+
+When the cube is used, the transfer happens immediately. The source item loses its `CraftName` and `Gems`, and the target item receives them.
 
 | ItemId | Effect |
 |--------|--------|
@@ -485,21 +393,7 @@ Use item `101150` to activate the window. The `CraftName` and `Gems` will be rem
 
 ### Success Rate
 
-The base success rate is 30 percent.
-
-| ItemId  | Effect | ReqVg | Success Rate |
-|---------|--------|-------|--------------|
-| 101156  | 106    | 20    | 50           |
-| 101157  | 106    | 50    | 80           |
-| 101158  | 106    | 60    | 90           |
-
-### Clients
-
-| Locale | Patch | Supported          |
-|--------|-------|--------------------|
-| ES     | 171   | :white_check_mark: |
-| PT     | 182   | :x:                |
-| PT     | 189   | :x:                |
+The transfer is always successful. Catalysts are not used.
 
 ## Perfect Lapisian
 
@@ -527,40 +421,9 @@ If `ReqRec` is zero, the game service will get the rate from `g_LapisianEnchantS
 | ShootRogue     | 0:1      | Can use with Gloves       |
 | AttackMage     | 0:1      | Can use with Boots        |
 | ReqRec         | 0:10000  | Success rate              |
-| Range          | 0:19     | Minimum item enchant step |
-| AttackTime     | 1:20     | Maximum step              |
 | ReqVg          | 0:1      | Needs item protection     |
 
-## Perfect Lapisian Combination
-
-Use item `101101` to activate the window. The `ReqLuc` value is the number of lapisian required for combination. See system message 510 for more information.
-
 ## Item Effects
-
-### Pets
-
-The function that adds support for pet item effects is disabled by default because of Cheat Engine scripts.
-
-```cpp
-// sdev\src\packet_gem.cpp
-//#define SHAIYA_EP6_4_ENABLE_PET_ITEM_EFFECT
-```
-
-The following item effects are supported:
-
-| ItemId | ItemEffect |
-|--------|------------|
-| 120120 | 212        | 
-| 120121 | 213        |
-| 120122 | 214        |
-
-The item effect will determine which effect will be rendered when the pet is equipped.
-
-| ItemEffect | EffectName        | EffectDataId |
-|------------|-------------------|--------------|
-| 212        | pet_gold.EFT      | 291          |
-| 213        | pet_item.EFT      | 292          |
-| 214        | pet_gold_item.EFT | 293          |
 
 ### Safety Charms
 
@@ -571,16 +434,12 @@ The item effect will determine which effect will be rendered when the pet is equ
 
 ### Town Move Scrolls
 
-| ItemId | Effect | GateKeeper |
-|--------|--------|------------|
-| 101102 | 104    | 111        |
-| 101103 | 104    | 112        |
-| 101104 | 104    | 101        |
-| 101105 | 104    | 102        |
-| 101106 | 104    | 103        |
-| 101107 | 104    | 104        |
-| 101108 | 104    | 105        |
-| 101109 | 104    | 106        |
+Town move scrolls now use the item `ReqVg` value as the `NpcTypeID` of the
+gatekeeper in map `2`.
+
+| Effect | ReqVg |
+|--------|-------|
+| 104    | GateKeeper NpcTypeID |
 
 # Notes
 

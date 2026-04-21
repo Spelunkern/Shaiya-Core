@@ -353,6 +353,9 @@ void hook::quick_slot()
     util::write_memory((void*)0x4FEF3A, 0x02, 1);
     // remove skill delay
     util::write_memory((void*)0x4FE8F1, 0x90, 2);
+    // Fix Delay Skills.
+    // Removes the client-side +1000ms gate at 005DEC7F.
+    util::write_memory((void*)0x5DEC7F, "\x90\x90\x90\x90\x90\x90", 6);
     // remove basic delay
     util::write_memory((void*)0x4FEB78, 0x90, 6);
     // remove revolver delay

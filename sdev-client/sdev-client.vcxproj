@@ -12,6 +12,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\main.h" />
+    <ClInclude Include="..\external\discord-rpc\include\discord_register.h" />
+    <ClInclude Include="..\external\discord-rpc\include\discord_rpc.h" />
+    <ClInclude Include="..\external\imgui\imgui.h" />
+    <ClInclude Include="..\external\imgui\imgui_internal.h" />
+    <ClInclude Include="..\external\imgui\imconfig.h" />
+    <ClInclude Include="..\external\imgui\imstb_rectpack.h" />
+    <ClInclude Include="..\external\imgui\imstb_textedit.h" />
+    <ClInclude Include="..\external\imgui\imstb_truetype.h" />
+    <ClInclude Include="..\external\imgui\backends\imgui_impl_dx9.h" />
+    <ClInclude Include="..\external\imgui\backends\imgui_impl_win32.h" />
     <ClInclude Include="include\shaiya\3DC_Model.h" />
     <ClInclude Include="include\shaiya\AesKey.h" />
     <ClInclude Include="include\shaiya\BillingItemInfo.h" />
@@ -20,6 +30,7 @@
     <ClInclude Include="include\shaiya\CAniListData.h" />
     <ClInclude Include="include\shaiya\CCharacter.h" />
     <ClInclude Include="include\shaiya\CCharacterChat.h" />
+    <ClInclude Include="include\shaiya\CButton.h" />
     <ClInclude Include="include\shaiya\CDataFile.h" />
     <ClInclude Include="include\shaiya\CEffectData.h" />
     <ClInclude Include="include\shaiya\CEffectModel.h" />
@@ -29,6 +40,7 @@
     <ClInclude Include="include\shaiya\CInput.h" />
     <ClInclude Include="include\shaiya\CItem.h" />
     <ClInclude Include="include\shaiya\CMap.h" />
+    <ClInclude Include="include\shaiya\CMessage.h" />
     <ClInclude Include="include\shaiya\CMonster.h" />
     <ClInclude Include="include\shaiya\CMonsterData.h" />
     <ClInclude Include="include\shaiya\CNetwork.h" />
@@ -41,6 +53,7 @@
     <ClInclude Include="include\shaiya\CQuickSlot.h" />
     <ClInclude Include="include\shaiya\CSheetStatus.h" />
     <ClInclude Include="include\shaiya\CStaticText.h" />
+    <ClInclude Include="include\shaiya\CStatusMiniBar.h" />
     <ClInclude Include="include\shaiya\CTexture.h" />
     <ClInclude Include="include\shaiya\CTextureList.h" />
     <ClInclude Include="include\shaiya\CUnionPartyInfo.h" />
@@ -74,9 +87,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\shaiya\CCharacter.cpp" />
+    <ClCompile Include="include\shaiya\CButton.cpp" />
     <ClCompile Include="include\shaiya\CDataFile.cpp" />
     <ClCompile Include="include\shaiya\CEffectData.cpp" />
     <ClCompile Include="include\shaiya\CMonster.cpp" />
+    <ClCompile Include="include\shaiya\CMessage.cpp" />
     <ClCompile Include="include\shaiya\CNetwork.cpp" />
     <ClCompile Include="include\shaiya\CPlayerData.cpp" />
     <ClCompile Include="include\shaiya\CQuickSlot.cpp" />
@@ -87,20 +102,38 @@
     <ClCompile Include="include\shaiya\GuildData2.cpp" />
     <ClCompile Include="include\shaiya\SIMM.cpp" />
     <ClCompile Include="include\shaiya\Static.cpp" />
+    <ClCompile Include="..\external\discord-rpc\src\connection_win.cpp" />
+    <ClCompile Include="..\external\discord-rpc\src\discord_register_win.cpp" />
+    <ClCompile Include="..\external\discord-rpc\src\discord_rpc.cpp" />
+    <ClCompile Include="..\external\discord-rpc\src\rpc_connection.cpp" />
+    <ClCompile Include="..\external\discord-rpc\src\serialization.cpp" />
+    <ClCompile Include="..\external\imgui\imgui.cpp" />
+    <ClCompile Include="..\external\imgui\imgui_draw.cpp" />
+    <ClCompile Include="..\external\imgui\imgui_tables.cpp" />
+    <ClCompile Include="..\external\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="..\external\imgui\backends\imgui_impl_dx9.cpp" />
+    <ClCompile Include="..\external\imgui\backends\imgui_impl_win32.cpp" />
     <ClCompile Include="src\camera_limit.cpp" />
     <ClCompile Include="src\character.cpp" />
     <ClCompile Include="src\command.cpp" />
     <ClCompile Include="src\custom_game.cpp" />
+    <ClCompile Include="src\discord.cpp" />
     <ClCompile Include="src\dllmain.cpp" />
     <ClCompile Include="src\equipment.cpp" />
+    <ClCompile Include="src\ep6_repo_features.cpp" />
     <ClCompile Include="src\exp_view.cpp" />
+    <ClCompile Include="src\imgui_layer.cpp" />
     <ClCompile Include="src\input.cpp" />
     <ClCompile Include="src\item_icon.cpp" />
+    <ClCompile Include="src\main_stats.cpp" />
     <ClCompile Include="src\name_color.cpp" />
     <ClCompile Include="src\patch.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\packet.cpp" />
     <ClCompile Include="src\quick_slot.cpp" />
+    <ClCompile Include="src\raid.cpp" />
+    <ClCompile Include="src\resolutions.cpp" />
+    <ClCompile Include="src\target_view.cpp" />
     <ClCompile Include="src\title.cpp" />
     <ClCompile Include="src\vehicle.cpp" />
     <ClCompile Include="src\weapon_step.cpp" />
@@ -108,6 +141,8 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resources\sdev.rc" />
+  </ItemGroup>
+  <ItemGroup>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -167,7 +202,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <LanguageStandard_C>stdclatest</LanguageStandard_C>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(DXSDK_DIR)Include;$(SolutionDir);$(ProjectDir);</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(DXSDK_DIR)Include;$(SolutionDir);$(ProjectDir);$(SolutionDir)external\imgui;$(SolutionDir)external\imgui\backends;$(SolutionDir)external\discord-rpc\include;$(SolutionDir)external\discord-rpc\src;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -191,7 +226,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <LanguageStandard_C>stdclatest</LanguageStandard_C>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(DXSDK_DIR)Include;$(SolutionDir);$(ProjectDir);</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(DXSDK_DIR)Include;$(SolutionDir);$(ProjectDir);$(SolutionDir)external\imgui;$(SolutionDir)external\imgui\backends;$(SolutionDir)external\discord-rpc\include;$(SolutionDir)external\discord-rpc\src;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

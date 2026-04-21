@@ -1,11 +1,22 @@
 #pragma once
 
+namespace shaiya
+{
+    struct CUser;
+}
+
 void Main();
 extern "C" __declspec(dllexport) void DllExport();
+
+namespace packet_gem
+{
+    int use_item_ability_transfer(shaiya::CUser* user, int bag, int slot);
+}
 
 namespace hook
 {
     void item_effect();
+    void utilities();
     void packet_character();
     void packet_exchange();
     void packet_gem();
@@ -16,6 +27,7 @@ namespace hook
     void packet_party();
     void packet_pc();
     void packet_quest();
+    void raid_150();
     void packet_reward_item();
     void packet_shop();
     void user_equipment();

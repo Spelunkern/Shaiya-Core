@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <filesystem>
+#include <format>
 #include <fstream>
 #include <map>
 #include <ranges>
@@ -8,17 +9,97 @@
 #include <vector>
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+#include <util/util.h>
 #include <util/ini/ini.h>
 #include <shaiya/include/network/game/RewardItemUnit.h>
 #include "include/extensions/filesystem.hpp"
+#include "BattlefieldMoveInfo.h"
 #include "Configuration.h"
 #include "ItemInfo.h"
-#include "ItemRemake.h"
 #include "ItemSynthesis.h"
 #include "RewardItem.h"
 #include "SBinaryReader.h"
 #include "Synergy.h"
 using namespace shaiya;
+
+namespace
+{
+    constexpr int DefaultEnchantCap = 20;
+    constexpr int DefaultLevelCap = 70;
+    constexpr int MinEnchantCap = 1;
+    // Hard safety limit for the INI-driven enchant cap. The patched byte can
+    // technically hold higher values, but production configs should not allow
+    // enchant caps above 49 because higher values can destabilize balance and
+    // related item calculations.
+    constexpr int MaxEnchantCap = 49;
+    constexpr int MinLevelCap = 1;
+    constexpr int MaxLevelCap = 254;
+    constexpr uintptr_t EnchantCapAddress = 0x46CCC1;
+    constexpr uintptr_t LevelCapAddresses[]
+    {
+        0x460C57,
+        0x460C87,
+        0x460CB7,
+        0x4612CE,
+        0x4612F9,
+        0x461324,
+        0x46135D,
+        0x4613AE,
+        0x4613FB,
+        0x461440,
+        0x464FF7,
+        0x465080,
+        0x465161,
+        0x4651DC,
+        0x4651EC,
+        0x465241,
+        0x467BFE,
+        0x467C20,
+        0x467C99,
+        0x480E0E,
+        0x480FC6,
+        0x49241D,
+        0x49243D,
+        0x49B4A4,
+        0x49B4D5,
+        0x49B506,
+        0x49B537,
+        0x49B564,
+        0x49B591,
+        0x49B5E0,
+        0x49B63C,
+        0x49B690,
+        0x49B6DC,
+        0x49B71E,
+        0x49B760,
+        0x49B7C4,
+        0x49B820,
+        0x49B874,
+        0x49B8C0,
+        0x49B902,
+        0x49B944,
+        0x49BB77,
+        0x49BB9E,
+        0x49BDA0,
+        0x49BDD1,
+        0x49BE02,
+        0x49BE37,
+        0x49BE64,
+        0x49BE91,
+        0x49BEDD,
+        0x49BF36,
+        0x49BF83,
+        0x49BFD3,
+        0x49C015,
+        0x49C054,
+        0x49C0B6,
+        0x49C10F,
+        0x49C15C,
+        0x49C1AC,
+        0x49C1EE,
+        0x49C22D
+    };
+}
 
 void Configuration::Init()
 {
@@ -32,107 +113,98 @@ void Configuration::Init()
     m_root.assign(first, last).remove_filename();
 }
 
-void Configuration::LoadItemRemake4()
+void Configuration::LoadServerConfig()
 {
     try
     {
         std::filesystem::path path(m_root);
-        ext::filesystem::combine(path, "Data", "ItemRemake4.ini");
+        ext::filesystem::combine(path, "Data", "ServerConfig.ini");
 
         if (!std::filesystem::exists(path))
-            return;
-
-        auto sections = util::ini::get_sections(path);
-        for (const auto& section : sections)
         {
-            auto pairs = util::ini::get_pairs(section.c_str(), path);
-            if (pairs.size() != 5)
-                continue;
-
-            auto itemId1 = std::stoi(pairs[0].second);
-            if (itemId1 < ItemId_MIN || itemId1 > ItemId_MAX)
-                continue;
-
-            auto itemId2 = std::stoi(pairs[1].second);
-            if (itemId2 < ItemId_MIN || itemId2 > ItemId_MAX)
-                continue;
-
-            auto itemId3 = std::stoi(pairs[2].second);
-            if (itemId3 < ItemId_MIN || itemId3 > ItemId_MAX)
-                continue;
-
-            auto type = std::stoi(pairs[3].second);
-            if (!std::in_range<uint8_t>(type))
-                continue;
-
-            auto typeId = std::stoi(pairs[4].second);
-            if (!std::in_range<uint8_t>(typeId))
-                continue;
-
-            ItemRemake remake{};
-            remake.items[0] = itemId1;
-            remake.items[1] = itemId2;
-            remake.items[2] = itemId3;
-            remake.newItemType = type;
-            remake.newItemTypeId = typeId;
-            g_itemRemake4.push_back(remake);
+            util::ini::write_pair(L"Server", L"EnchantCap", L"20", path);
+            util::ini::write_pair(L"Server", L"LevelCap", L"70", path);
         }
+
+        auto enchantCap = static_cast<int>(util::ini::get_value(L"Server", L"EnchantCap", DefaultEnchantCap, path));
+        enchantCap = std::clamp(enchantCap, MinEnchantCap, MaxEnchantCap);
+
+        auto enchantCapValue = static_cast<uint8_t>(enchantCap);
+        util::write_memory(reinterpret_cast<void*>(EnchantCapAddress), &enchantCapValue, sizeof(enchantCapValue));
+
+        auto levelCap = static_cast<int>(util::ini::get_value(L"Server", L"LevelCap", DefaultLevelCap, path));
+        levelCap = std::clamp(levelCap, MinLevelCap, MaxLevelCap);
+
+        auto levelCapValue = static_cast<uint8_t>(levelCap);
+        for (auto address : LevelCapAddresses)
+            util::write_memory(reinterpret_cast<void*>(address), &levelCapValue, sizeof(levelCapValue));
     }
     catch (...)
     {
-        g_itemRemake4.clear();
+        auto enchantCapValue = static_cast<uint8_t>(DefaultEnchantCap);
+        util::write_memory(reinterpret_cast<void*>(EnchantCapAddress), &enchantCapValue, sizeof(enchantCapValue));
+
+        auto levelCapValue = static_cast<uint8_t>(DefaultLevelCap);
+        for (auto address : LevelCapAddresses)
+            util::write_memory(reinterpret_cast<void*>(address), &levelCapValue, sizeof(levelCapValue));
     }
 }
 
-void Configuration::LoadItemRemake5()
+void Configuration::LoadBattlefieldMoveData()
 {
     try
     {
         std::filesystem::path path(m_root);
-        ext::filesystem::combine(path, "Data", "ItemRemake5.ini");
+        ext::filesystem::combine(path, "Data", "BattleFieldMoveInfo.ini");
 
         if (!std::filesystem::exists(path))
             return;
 
-        auto sections = util::ini::get_sections(path);
-        for (const auto& section : sections)
+        auto count = static_cast<int>(util::ini::get_value(L"BATTLEFIELD_INFO", L"BATTLEFIELD_COUNT", 0, path));
+        if (count <= 0)
+            return;
+
+        g_battlefieldMoveData.clear();
+        g_battlefieldMoveData.reserve(count);
+
+        for (int num = 1; num <= count; ++num)
         {
-            auto pairs = util::ini::get_pairs(section.c_str(), path);
-            if (pairs.size() != 5)
+            auto section = std::format(L"BATTLEFIELD_{}", num);
+            auto mapId = static_cast<int>(util::ini::get_value(section.c_str(), L"MAP_NO", -1, path));
+            if (mapId < 0)
                 continue;
 
-            auto itemId1 = std::stoi(pairs[0].second);
-            if (itemId1 < ItemId_MIN || itemId1 > ItemId_MAX)
-                continue;
+            BattlefieldMoveInfo info{};
+            info.levelMin = static_cast<int>(util::ini::get_value(section.c_str(), L"LEVEL_MIN", 0, path));
+            info.levelMax = static_cast<int>(util::ini::get_value(section.c_str(), L"LEVEL_MAX", 0, path));
 
-            auto itemId2 = std::stoi(pairs[1].second);
-            if (itemId2 < ItemId_MIN || itemId2 > ItemId_MAX)
-                continue;
+            auto readPos = [&](int index, const wchar_t* prefix)
+            {
+                auto keyX = std::format(L"{}_POSX", prefix);
+                auto keyY = std::format(L"{}_POSY", prefix);
+                auto keyZ = std::format(L"{}_POSZ", prefix);
 
-            auto itemId3 = std::stoi(pairs[2].second);
-            if (itemId3 < ItemId_MIN || itemId3 > ItemId_MAX)
-                continue;
+                auto x = util::ini::get_value(section.c_str(), keyX.c_str(), L"", path);
+                auto y = util::ini::get_value(section.c_str(), keyY.c_str(), L"", path);
+                auto z = util::ini::get_value(section.c_str(), keyZ.c_str(), L"", path);
 
-            auto type = std::stoi(pairs[3].second);
-            if (!std::in_range<uint8_t>(type))
-                continue;
+                info.mapPos[index].mapId = mapId;
+                info.mapPos[index].x = std::stof(x);
+                info.mapPos[index].y = std::stof(y);
+                info.mapPos[index].z = std::stof(z);
+            };
 
-            auto typeId = std::stoi(pairs[4].second);
-            if (!std::in_range<uint8_t>(typeId))
-                continue;
+            readPos(0, L"HU");
+            readPos(1, L"EL");
+            readPos(2, L"DE");
+            readPos(3, L"VI");
 
-            ItemRemake remake{};
-            remake.items[0] = itemId1;
-            remake.items[1] = itemId2;
-            remake.items[2] = itemId3;
-            remake.newItemType = type;
-            remake.newItemTypeId = typeId;
-            g_itemRemake5.push_back(remake);
+            g_battlefieldMoveData.push_back(info);
         }
     }
     catch (...)
     {
-        g_itemRemake5.clear();
+        g_battlefieldMoveData.clear();
     }
 }
 

@@ -93,9 +93,6 @@ namespace shaiya
         TyrosStone,
         AbsoluteRecreationRune,
         NpcRecall = 200,
-        Item500 = 210,
-        PetPickGoldDrop = 212,
-        PetPickItemDrop,
-        PetPickDrop
+        Item500 = 210
     };
 }

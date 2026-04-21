@@ -1,6 +1,42 @@
-*.vs
-*.vscode
-*Debug
-*Release
-*x64
-*packages
+# IDE/editor state
+.vs/
+.vscode/
+*.user
+*.suo
+
+# Build outputs
+Debug/
+Release/
+x64/
+bin/
+obj/
+*.obj
+*.pdb
+*.ilk
+*.idb
+*.ipdb
+*.iobj
+*.lib
+*.exp
+*.dll
+*.exe
+*.tlog
+*.lastbuildstate
+
+# Package/cache folders
+packages/
+.tools/
+
+# Local logs and temporary files
+*.log
+*.tmp
+*.temp
+*.bak
+*.old
+*.orig
+*_disasm.txt
+*_headers.txt
+
+# OS metadata
+Thumbs.db
+desktop.ini

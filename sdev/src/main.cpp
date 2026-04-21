@@ -2,14 +2,12 @@
 #include "include/main.h"
 #include "include/shaiya/Configuration.h"
 #include "include/shaiya/CUser.h"
-#include "include/shaiya/RevengeMark.h"
 #include "include/shaiya/Synergy.h"
 using namespace shaiya;
 
 void user_leave_world_hook(CUser* user)
 {
     g_itemSetSynergies.erase(user->id);
-    g_revengeMarks.erase(user->id);
 }
 
 /// <summary>
@@ -87,6 +85,10 @@ void __declspec(naked) naked_0x455C40()
 
 void Main()
 {
+    Configuration::Init();
+    Configuration::LoadServerConfig();
+    Configuration::LoadBattlefieldMoveData();
+
     // CUser::CUser
     util::detour((void*)0x455165, naked_0x455165, 6);
     // CUser::ResetCharacter
@@ -99,6 +101,7 @@ void Main()
     util::write_memory((void*)0x411F74, &size, 4);
 
     hook::item_effect();
+    hook::utilities();
     hook::packet_character();
     hook::packet_exchange();
     hook::packet_gem();
@@ -109,6 +112,7 @@ void Main()
     hook::packet_party();
     hook::packet_pc();
     hook::packet_quest();
+    hook::raid_150();
     hook::packet_reward_item();
     hook::packet_shop();
     hook::user_equipment();
@@ -116,10 +120,6 @@ void Main()
     hook::user_skill();
     hook::user_status();
     hook::world_thread();
-
-    Configuration::Init();
-    Configuration::LoadItemRemake4();
-    Configuration::LoadItemRemake5();
     Configuration::LoadItemSetData();
     Configuration::LoadItemSynthesis();
     Configuration::LoadRewardItemEvent();

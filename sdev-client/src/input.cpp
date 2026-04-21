@@ -10,8 +10,8 @@ namespace input
 {
     void apply_status_points_by_key_state(CSheetStatus* sheetStatus, int statusIndex, int addPoints)
     {
-        auto ctrlKeyDown = GetAsyncKeyState(VK_CONTROL) & 0x8000;
-        if (ctrlKeyDown && sheetStatus->usablePoints >= addPoints)
+        auto leftButtonDown = GetAsyncKeyState(VK_LBUTTON) & 0x8000;
+        if (leftButtonDown && sheetStatus->usablePoints >= addPoints)
         {
             sheetStatus->usablePoints -= addPoints;
             sheetStatus->addPoints[statusIndex] += addPoints;
@@ -45,6 +45,6 @@ void __declspec(naked) naked_0x528D8D()
 
 void hook::input()
 {
-    // hold ctrl key to apply stats x10
+    // Hold left click to apply stats x10.
     util::detour((void*)0x528D8D, naked_0x528D8D, 9);
 }

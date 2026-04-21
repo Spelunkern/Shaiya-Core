@@ -35,11 +35,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mini-gmp", "mini-gmp", "{02
 		mini-gmp\mini-mpq.h = mini-gmp\mini-mpq.h
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "raid", "raid\raid.vcxproj", "{BD9B323B-8B7C-4755-A148-4590DEB02FE0}"
-	ProjectSection(ProjectDependencies) = postProject
-		{B72BDD57-D682-4B48-A0FA-37E8A5FCD0A4} = {B72BDD57-D682-4B48-A0FA-37E8A5FCD0A4}
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -70,10 +65,6 @@ Global
 		{29E1E2C5-FA64-460F-B0D8-142FCC8D0BF2}.Debug|x86.Build.0 = Debug|Win32
 		{29E1E2C5-FA64-460F-B0D8-142FCC8D0BF2}.Release|x86.ActiveCfg = Release|Win32
 		{29E1E2C5-FA64-460F-B0D8-142FCC8D0BF2}.Release|x86.Build.0 = Release|Win32
-		{BD9B323B-8B7C-4755-A148-4590DEB02FE0}.Debug|x86.ActiveCfg = Debug|Win32
-		{BD9B323B-8B7C-4755-A148-4590DEB02FE0}.Debug|x86.Build.0 = Debug|Win32
-		{BD9B323B-8B7C-4755-A148-4590DEB02FE0}.Release|x86.ActiveCfg = Release|Win32
-		{BD9B323B-8B7C-4755-A148-4590DEB02FE0}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

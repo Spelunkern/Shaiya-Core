@@ -1,126 +1,82 @@
-# Documentation
+# Client Module
 
-This library is for Shaiya PT client 182 modifications. The DirectX SDK installer should create a system environment variable named `DXSDK_DIR` that specifies the installation directory.
+This module contains `Game.exe` hooks and client-side quality-of-life patches.
 
 ## Environment
 
-Windows 10
+- Windows 10 or newer
+- Visual Studio 2022
+- C++23
+- Microsoft DirectX SDK (June 2010)
+- x86 build target
 
-Visual Studio 2022
+## Build
 
-C++ 23
-
-## Prerequisites
-
-[Microsoft Visual C++ Redistributable](https://aka.ms/vs/17/release/vc_redist.x86.exe)
-
-[Microsoft DirectX SDK (June 2010)](https://www.microsoft.com/en-us/download/details.aspx?id=6812)
-
-## Binaries
-
-The files have been partially restored to their original condition. I recommend using [PE Bear](https://github.com/hasherezade/pe-bear) to add new imports.
-
-![Capture](https://github.com/user-attachments/assets/6cc6d390-aaae-4f36-b362-f08ce9f243f5)
-
-### SData Formats
-
-| Name     | Format |
-|----------|--------|
-| Item     | EP6.4  |
-| Monster  | EP5    |
-| NpcQuest | EP6    |
-| NpcSkill | EP6    |
-| Skill    | EP6    |
-
-### Chat Color Exploit
-
-```
-STATUS_STACK_BUFFER_OVERRUN encountered
-A breakpoint instruction (__debugbreak() statement or a similar call) was executed in game.exe.
+```powershell
+$env:DXSDK_DIR='C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\'
+& 'C:\BuildTools\MSBuild\Current\Bin\MSBuild.exe' ..\Shaiya-Core.sln /t:sdev-client /p:Configuration=Release /p:Platform=x86 /m
 ```
 
-I believe this blog post explains what happens:
+## CONFIG.INI
 
-https://devblogs.microsoft.com/oldnewthing/20080404-00/?p=22863
+The client reads several user-facing options from `CONFIG.INI`.
 
-Increasing the stack allocation in two functions seems to be a good solution.
+```ini
+[ADVANCED]
+; 1 skips the updater token check and lets Game.exe launch directly.
+; 0 keeps the stock updater-required behavior.
+SKIPUPDATER=0
 
-```
-// ps0182 (PT)
-0047DB76:
-sub esp,000005BC
+; Empty or missing defaults to 127.0.0.1.
+IP=
 
-0047DB83:
-mov [esp+000005B8],eax
+; Enables or disables the GM/admin ID view patch where supported.
+IDVIEW=OFF
 
-0047E871:
-mov ecx,[esp+000005C4]
+; Visual title rendering from cloak data.
+TITLES=ON
 
-0057C280:
-sub esp,0000054C
-
-0057C28D:
-mov [esp+00000548],eax
-
-0057C297:
-mov esi,[esp+0000055C]
-
-0057C9F9:
-mov ecx,[esp+00000558]
-
-0057CA0B:
-add esp,0000054C
+; Visual colored-name rendering from helmet data.
+COLOUR=ON
 ```
 
-```
-// ps0171 (ES)
-0047D896:
-sub esp,000005BC
+## Commands
 
-0047D8A3:
-mov [esp+000005B8],eax
+- `/font` opens the Windows font picker and persists the selected in-game font.
+- `/titles on` and `/titles off` toggle visual item titles at runtime.
+- `/colour on` and `/colour off` toggle visual colored names at runtime.
 
-0047E591:
-mov ecx,[esp+000005C4]
+## Stable Client Features
 
-0057C670:
-sub esp,0000054C
+- PNG interface support for known UI texture paths.
+- PNG screenshot output instead of JPG.
+- Chat UTF-8 support for composed Unicode input, including Vietnamese IME text, without enabling the global Vietnam codepage branch.
+- Unicode-safe main window handling while preserving the normal `Shaiya` window title.
+- EP4 UI support for the selected HUD pieces, excluding inventory and the stock EXP/Bless bar handling.
+- Raid 150 UI component using PNG raid textures.
+- Battleground button under the main stats UI.
+- Single-server selection skip with a safe delayed selection path.
+- Login splash skip, documented in code as `Login crap skip`.
+- Skip mode selection and force Ultimate Mode at character creation.
+- Name availability check bypass for character creation.
+- Client-side buy/sell quantity limit increased to 255.
+- Target HP viewer anchored to the native target frame and using the configured game font.
+- Movable/persistent buff layout with F6 and left-click behavior.
+- Item titles from cloak data and colored names from helmet data, including rainbow color mode.
+- Discord RPC with a static configurable message.
+- New resolution entries.
+- Cooldown for subaction messages (20 seconds).
+- Level-up message texture suppression.
+- Visual timer alignment for logout and ress-leader timers.
 
-0057C67D:
-mov [esp+00000548],eax
+## Asset Notes
 
-0057C687:
-mov esi,[esp+0000055C]
+- Interface assets used by the PNG redirect must exist in the client `Data/interface` tree.
+- Raid button assets are expected as PNG.
+- The client intentionally keeps icon assets outside the broad PNG redirect unless a feature explicitly handles them.
 
-0057CDE9:
-mov ecx,[esp+00000558]
+## Removed Or Disabled Work
 
-0057CDFB:
-add esp,0000054C
-```
-
-### Recovery
-
-Episode 6.4 (and greater) clients do not add the values in the 0x505 packet handler.
-
-```
-// ps0171 (ES)
-00594AC8  MOV DWORD PTR DS:[EAX+158],ESI
-00594ACE  MOV DWORD PTR DS:[EAX+160],EDX
-00594AD4  MOV DWORD PTR DS:[EAX+168],ECX
-
-00594AEB  MOV DWORD PTR DS:[914478],ESI
-00594AF1  MOV DWORD PTR DS:[91447C],EDX
-00594AF7  MOV DWORD PTR DS:[914480],ECX
-```
-
-```
-// ps0182 (PT)
-005942D8  MOV DWORD PTR DS:[EAX+158],ESI
-005942DE  MOV DWORD PTR DS:[EAX+160],EDX
-005942E4  MOV DWORD PTR DS:[EAX+168],ECX
-
-005942FB  MOV DWORD PTR DS:[914478],ESI
-00594301  MOV DWORD PTR DS:[91447C],EDX
-00594307  MOV DWORD PTR DS:[914480],ECX
-```
+- The experimental Item Mall vehicle preview patch was removed because it did not provide reliable behavior.
+- The large cooldown-number overlay experiment was removed because it had too many rendering defects.
+- Experimental map select-screen WLD rendering work is not part of this module.

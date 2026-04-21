@@ -16,6 +16,40 @@ using namespace shaiya;
 
 namespace packet_pc
 {
+    bool move_to_pending_position(CUser* user, bool& changedMap)
+    {
+        changedMap = user->mapId != user->moveMapId;
+
+        if (user->mapId != user->moveMapId)
+        {
+            CWorld::ZoneLeaveUserMove(user, user->moveMapId, user->movePos.x, user->movePos.y, user->movePos.z);
+
+            GameUserSetMapPosOutgoing outgoing{};
+            outgoing.objectId = user->id;
+            outgoing.mapId = user->moveMapId;
+            outgoing.x = user->movePos.x;
+            outgoing.y = user->movePos.y;
+            outgoing.z = user->movePos.z;
+            NetworkHelper::Send(user, &outgoing, sizeof(GameUserSetMapPosOutgoing));
+            return true;
+        }
+
+        if (!user->zone)
+            return false;
+
+        if (!CZone::MoveUser(user->zone, user, user->movePos.x, user->movePos.y, user->movePos.z))
+            return false;
+
+        GameUserSetMapPosOutgoing outgoing{};
+        outgoing.objectId = user->id;
+        outgoing.mapId = user->moveMapId;
+        outgoing.x = user->movePos.x;
+        outgoing.y = user->movePos.y;
+        outgoing.z = user->movePos.z;
+        CObject::SendView(user, &outgoing, sizeof(GameUserSetMapPosOutgoing));
+        return true;
+    }
+
     /// <summary>
     /// Handles incoming 0x55A packets.
     /// </summary>
@@ -51,6 +85,15 @@ namespace packet_pc
 
     void town_move_scroll_hook(CUser* user)
     {
+        // Battleground button movement reuses the same 5s cast/update path as
+        // town scrolls, but it is not backed by a consumable item.
+        if (!user->savePosUseBag && !user->savePosUseSlot)
+        {
+            bool changedMap = false;
+            move_to_pending_position(user, changedMap);
+            return;
+        }
+
         auto& item = user->inventory[user->savePosUseBag][user->savePosUseSlot];
         if (!item)
             return;
@@ -61,36 +104,9 @@ namespace packet_pc
         if (item->info->effect != ItemEffect::TownMoveScroll)
             return;
 
-        if (user->mapId != user->moveMapId)
-        {
-            CWorld::ZoneLeaveUserMove(user, user->moveMapId, user->movePos.x, user->movePos.y, user->movePos.z);
-
-            GameUserSetMapPosOutgoing outgoing{};
-            outgoing.objectId = user->id;
-            outgoing.mapId = user->moveMapId;
-            outgoing.x = user->movePos.x;
-            outgoing.y = user->movePos.y;
-            outgoing.z = user->movePos.z;
-            NetworkHelper::Send(user, &outgoing, sizeof(GameUserSetMapPosOutgoing));
-            CUser::ItemUseNSend(user, user->savePosUseBag, user->savePosUseSlot, true);
-        }
-        else
-        {
-            if (!user->zone)
-                return;
-
-            if (!CZone::MoveUser(user->zone, user, user->movePos.x, user->movePos.y, user->movePos.z))
-                return;
-
-            GameUserSetMapPosOutgoing outgoing{};
-            outgoing.objectId = user->id;
-            outgoing.mapId = user->moveMapId;
-            outgoing.x = user->movePos.x;
-            outgoing.y = user->movePos.y;
-            outgoing.z = user->movePos.z;
-            CObject::SendView(user, &outgoing, sizeof(GameUserSetMapPosOutgoing));
-            CUser::ItemUseNSend(user, user->savePosUseBag, user->savePosUseSlot, false);
-        }
+        bool changedMap = false;
+        if (move_to_pending_position(user, changedMap))
+            CUser::ItemUseNSend(user, user->savePosUseBag, user->savePosUseSlot, changedMap);
     }
 }
 

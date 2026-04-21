@@ -1,9 +1,5 @@
-//#define SHAIYA_EP6_4_ENABLE_PET_ITEM_EFFECT
 #include <util/util.h>
 #include <shaiya/include/common/ItemEffect.h>
-#include <shaiya/include/common/ItemSlot.h>
-#include <shaiya/include/common/ItemType.h>
-#include <shaiya/include/common/SkillTypes.h>
 #include <shaiya/include/network/game/outgoing/0200.h>
 #include <shaiya/include/network/game/outgoing/0400.h>
 #include "include/main.h"
@@ -11,9 +7,7 @@
 #include "include/shaiya/CNpcData.h"
 #include "include/shaiya/CObject.h"
 #include "include/shaiya/CUser.h"
-#include "include/shaiya/CZone.h"
 #include "include/shaiya/ItemInfo.h"
-#include "include/shaiya/NetworkHelper.h"
 #include "include/shaiya/NpcGateKeeper.h"
 #include "include/shaiya/UserHelper.h"
 using namespace shaiya;
@@ -28,40 +22,16 @@ namespace item_effect
     {
         switch (itemEffect)
         {
+        case ItemEffect::ItemAbilityTransfer:
+            return packet_gem::use_item_ability_transfer(user, bag, slot);
         case ItemEffect::TownMoveScroll:
         {
-            NpcGateKeeper* gateKeeper = nullptr;
-
-            switch (item->info->itemId)
-            {
-            case 101102:
-                gateKeeper = CNpcData<NpcGateKeeper*>::GetNpc(2, 111);
-                break;
-            case 101103:
-                gateKeeper = CNpcData<NpcGateKeeper*>::GetNpc(2, 112);
-                break;
-            case 101104:
-                gateKeeper = CNpcData<NpcGateKeeper*>::GetNpc(2, 101);
-                break;
-            case 101105:
-                gateKeeper = CNpcData<NpcGateKeeper*>::GetNpc(2, 102);
-                break;
-            case 101106:
-                gateKeeper = CNpcData<NpcGateKeeper*>::GetNpc(2, 103);
-                break;
-            case 101107:
-                gateKeeper = CNpcData<NpcGateKeeper*>::GetNpc(2, 104);
-                break;
-            case 101108:
-                gateKeeper = CNpcData<NpcGateKeeper*>::GetNpc(2, 105);
-                break;
-            case 101109:
-                gateKeeper = CNpcData<NpcGateKeeper*>::GetNpc(2, 106);
-                break;
-            default:
+            // ReqVg stores the NpcTypeID of the gatekeeper used by this scroll.
+            auto gateKeeperId = item->info->reqVg;
+            if (!gateKeeperId)
                 return 0;
-            }
 
+            auto gateKeeper = CNpcData<NpcGateKeeper*>::GetNpc(2, gateKeeperId);
             if (!gateKeeper)
                 return 0;
 
@@ -85,75 +55,6 @@ namespace item_effect
         }
     }
 
-    /// <summary>
-    /// Implements item effects 212, 213, and 214.
-    /// </summary>
-    int zone_enter_item_hook(CItem* item, int enterType)
-    {
-        if (enterType != static_cast<int>(GameItemZoneEnterType::MobDrop))
-            return 0;
-
-        if (!item->zone)
-            return 0;
-
-        auto user = CZone::FindUser(item->zone, item->userId);
-        if (!user)
-            return 0;
-
-        auto& pet = user->inventory[0][ItemSlot::Pet];
-        if (!pet)
-            return 0;
-
-        if (item->type == ItemType::Gold)
-        {
-            auto money = item->dropMoney;
-            if (!money)
-                return 0;
-
-            auto itemEffect = pet->info->effect;
-            if (itemEffect != ItemEffect::PetPickGoldDrop && itemEffect != ItemEffect::PetPickDrop)
-                return 0;
-
-            auto rate = user->increaseGoldDropRate;
-            switch (user->charmType)
-            {
-            case SkillCharmType::BlueDragon:
-                break;
-            case SkillCharmType::WhiteTiger:
-                rate += 20;
-                break;
-            case SkillCharmType::RedPhoenix:
-                rate += 50;
-                break;
-            default:
-                break;
-            }
-
-            if (rate > 0)
-            {
-                auto bonus = (rate * money) / 100;
-                money += bonus;
-            }
-
-            CUser::ItemGetMoney(user, money);
-            return 1;
-        }
-        else
-        {
-            if (!item->info)
-                return 0;
-
-            if (item->info->realType == RealType::Quest)
-                return 0;
-
-            auto itemEffect = pet->info->effect;
-            if (itemEffect != ItemEffect::PetPickItemDrop && itemEffect != ItemEffect::PetPickDrop)
-                return 0;
-
-            CUser::ItemGet(user, item);
-            return 1;
-        }
-    }
 }
 
 unsigned u0x47469F = 0x47469F;
@@ -190,43 +91,8 @@ void __declspec(naked) naked_0x47468A()
     }
 }
 
-// CCell::EnterItem
-unsigned u0x42A170 = 0x42A170;
-unsigned u0x41DA1A = 0x41DA1A;
-unsigned u0x41DA85 = 0x41DA85;
-void __declspec(naked) naked_0x41DA15()
-{
-    __asm
-    {
-        pushad
-
-        mov eax,[esp+0x4C]
-
-        push eax // kind
-        push edi // item
-        call item_effect::zone_enter_item_hook
-        add esp,0x8
-        test eax,eax
-
-        popad
-
-        jne _0x41DA85
-
-        // original
-        call u0x42A170
-        jmp u0x41DA1A
-
-        _0x41DA85:
-        jmp u0x41DA85
-    }
-}
-
 void hook::item_effect()
 {
     // CUser::ItemUse
     util::detour((void*)0x47468A, naked_0x47468A, 6);
-#ifdef SHAIYA_EP6_4_ENABLE_PET_ITEM_EFFECT
-    // CZone::EnterItem
-    util::detour((void*)0x41DA15, naked_0x41DA15, 5);
-#endif
 }

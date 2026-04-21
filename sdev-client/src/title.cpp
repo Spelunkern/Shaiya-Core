@@ -1,6 +1,6 @@
-#include <map>
 #include <string>
-#include <tuple>
+#include <unordered_map>
+#include <windows.h>
 #include <util/util.h>
 #include "include/main.h"
 #include "include/shaiya/CCharacter.h"
@@ -16,101 +16,88 @@ namespace title
 {
     using ItemId = uint32_t;
 
-    std::map<ItemId, std::tuple<std::string, HexColor>> items
-    {
-        { 24028, { "Champion of Teos", HexColor::Red } },
-        { 24029, { "Gladiator", HexColor::Green } },
-        { 24030, { "Protector", HexColor::Blue } },
-        { 24031, { "Archimage", HexColor::Yellow } },
-        { 24032, { "Hawk Eye", HexColor::Aqua } },
-        { 24033, { "Outlaw", HexColor::Fuchsia } },
-        { 24034, { "Healer", HexColor::Maroon } },
-        { 24035, { "Hardcore Player", HexColor::DarkGreen } },
-        { 24036, { "Duelist", HexColor::NavyBlue } },
-        { 24037, { "Commander", HexColor::Olive } },
-        { 24038, { "Captain", HexColor::Purple } },
-        { 24039, { "Veteran", HexColor::Silver } },
-        { 24040, { "War Chief", HexColor::Gray } },
-        { 24041, { "Adventurer", HexColor::DarkPurple } },
-        { 24042, { "Queen", HexColor::DarkBlueGray } },
-        { 24043, { "King", HexColor::Teal } },
-        { 24044, { "Baron", HexColor::Maroon } },
-        { 24045, { "Baroness", HexColor::DarkGreen } },
-        { 24046, { "Mystic", HexColor::NavyBlue } },
-        { 24047, { "King of Arena", HexColor::Orange } },
-        { 24048, { "Elemental Master", HexColor::Purple } },
-        { 24049, { "Witch", HexColor::Teal } },
-        { 24050, { "Paladin", HexColor::MediumSpringGreen } },
-        { 24051, { "Shaman", HexColor::GoldenRod } },
-        { 24052, { "Druid", HexColor::FireBrick } },
-        { 24053, { "Death Knight", HexColor::GreenYellow } },
-        { 24054, { "High Priestess", HexColor::Chartreuse } },
-        { 24055, { "Interloper", HexColor::Crimson } },
-        { 24056, { "Crazy Cat Lady", HexColor::HotPink } },
-        { 24057, { "Mercenary", HexColor::Salmon } },
-        { 24058, { "Salty", HexColor::BlueViolet } },
-        { 24059, { "MVP", HexColor::CadetBlue } },
-        { 24060, { "Old School", HexColor::PowderBlue } },
-        { 24061, { "Cryptic", HexColor::FireBrick } },
-        { 24062, { "Chill Player", HexColor::SaddleBrown } },
-        { 24063, { "Farmer", HexColor::AntiqueWhite } },
-        { 24064, { "Enigmatic", HexColor::LawnGreen } },
-        { 24065, { "Rich", HexColor::Gold } },
-        { 24066, { "Fairy", HexColor::Orchid } },
-        { 24067, { "Survivor", HexColor::SpringGreen } },
-        { 24068, { "Untouchable", HexColor::SteelBlue } },
-        { 24069, { "Maniac", HexColor::LimeGreen } },
-        { 24104, { "Love Fool", HexColor::DeepPink } },
-        { 24105, { "Archivist", HexColor::LightSlateBlue } },
-        { 24106, { "Hero", HexColor::Turquoise } },
-        { 24107, { "Mad Scientist", HexColor::DodgerBlue } },
-        { 24108, { "Artisan", HexColor::MediumSlateBlue } },
-        { 24109, { "Staff Member", HexColor::DarkMagenta } },
-        { 24110, { "Game Master", HexColor::DarkGoldenRod } },
-        { 24114, { "Content Creator", HexColor::RosyBrown } },
-    };
-
     constexpr float chat_y_add = 1.75F;
+    constexpr uint16_t kRainbowTitleRange = 11;
+    std::unordered_map<CCharacter*, ItemId> userTitleItemIds;
 
-    void hook(CCharacter* user, float x, float y, float extrusion)
+    D3DCOLOR make_rgb_color(uint8_t red, uint8_t green, uint8_t blue)
     {
-        auto cloakType = user->equipment.type[ItemSlot::Cloak];
-        auto cloakTypeId = user->equipment.typeId[ItemSlot::Cloak];
+        return 0xFF000000
+            | (static_cast<D3DCOLOR>(red) << 16)
+            | (static_cast<D3DCOLOR>(green) << 8)
+            | static_cast<D3DCOLOR>(blue);
+    }
 
-        if (!cloakType)
-            return;
+    D3DCOLOR get_rainbow_title_color()
+    {
+        auto phase = (GetTickCount() / 450) % 6;
+        auto step = static_cast<uint8_t>((GetTickCount() % 450) * 255 / 450);
+        auto inverse = static_cast<uint8_t>(255 - step);
 
-        auto itemInfo = CDataFile::GetItemInfo(cloakType, cloakTypeId);
-        if (!itemInfo)
-            return;
-
-        auto itemId = (itemInfo->type * 1000) + itemInfo->typeId;
-
-        auto it = items.find(itemId);
-        if (it == items.end())
-            return;
-
-        auto& text = std::get<0>(it->second);
-        auto color = std::to_underlying(std::get<1>(it->second));
-
-        if (!user->title.text)
+        switch (phase)
         {
-            user->title.text = CStaticText::Create(text.c_str());
-            auto w = CStaticText::GetTextWidth(text.c_str());
-            user->title.pointX = static_cast<int>(w * 0.5);
+        case 0:
+            return make_rgb_color(255, step, 0);
+        case 1:
+            return make_rgb_color(inverse, 255, 0);
+        case 2:
+            return make_rgb_color(0, 255, step);
+        case 3:
+            return make_rgb_color(0, inverse, 255);
+        case 4:
+            return make_rgb_color(step, 0, 255);
+        default:
+            return make_rgb_color(255, 0, inverse);
         }
+    }
 
-        if (!user->title.text)
-            return;
+    bool is_title_cloak(const ItemInfo* itemInfo)
+    {
+        if (!itemInfo)
+            return false;
 
-        auto posY = static_cast<int>(y - 30.0);
-        auto posX = static_cast<int>(x - user->title.pointX);
+        if (itemInfo->reqIg != 1)
+            return false;
 
-        CStaticText::Draw(user->title.text, posX, posY, extrusion, color);
+        return itemInfo->type == std::to_underlying(RealType::Cloak)
+            || itemInfo->type == std::to_underlying(RealType::FuryCloak);
+    }
+
+    D3DCOLOR get_title_color(uint16_t range)
+    {
+        switch (range)
+        {
+        case 1:
+            return std::to_underlying(HexColor::Red);
+        case 2:
+            return std::to_underlying(HexColor::DodgerBlue);
+        case 3:
+            return std::to_underlying(HexColor::Green);
+        case 4:
+            return std::to_underlying(HexColor::Yellow);
+        case 5:
+            return std::to_underlying(HexColor::Orange);
+        case 6:
+            return std::to_underlying(HexColor::Purple);
+        case 7:
+            return std::to_underlying(HexColor::Pink);
+        case 8:
+            return std::to_underlying(HexColor::Cyan);
+        case 9:
+            return std::to_underlying(HexColor::Gold);
+        case 10:
+            return std::to_underlying(HexColor::Silver);
+        case kRainbowTitleRange:
+            return get_rainbow_title_color();
+        default:
+            return std::to_underlying(HexColor::White);
+        }
     }
 
     void reset(CCharacter* user)
     {
+        userTitleItemIds.erase(user);
+
         if (user->title.text)
         {
             if (user->title.text->texture)
@@ -122,6 +109,67 @@ namespace title
             Static::operator_delete(user->title.text);
             user->title.text = nullptr;
         }
+    }
+
+    bool ensure_text(CCharacter* user, ItemId itemId, const std::string& text)
+    {
+        auto cachedItemId = userTitleItemIds.find(user);
+        if (user->title.text && cachedItemId != userTitleItemIds.end() && cachedItemId->second == itemId)
+            return true;
+
+        reset(user);
+
+        user->title.text = CStaticText::Create(text.c_str());
+        if (!user->title.text)
+            return false;
+
+        auto w = CStaticText::GetTextWidth(text.c_str());
+        user->title.pointX = static_cast<int>(w * 0.5);
+        userTitleItemIds[user] = itemId;
+        return true;
+    }
+
+    void hook(CCharacter* user, float x, float y, float extrusion)
+    {
+        if (!g_showTitles)
+        {
+            reset(user);
+            return;
+        }
+
+        auto cloakType = user->equipment.type[ItemSlot::Cloak];
+        auto cloakTypeId = user->equipment.typeId[ItemSlot::Cloak];
+
+        if (!cloakType)
+        {
+            reset(user);
+            return;
+        }
+
+        auto itemInfo = CDataFile::GetItemInfo(cloakType, cloakTypeId);
+        if (!itemInfo)
+        {
+            reset(user);
+            return;
+        }
+
+        if (!is_title_cloak(itemInfo) || !itemInfo->name || !itemInfo->name[0])
+        {
+            reset(user);
+            return;
+        }
+
+        auto itemId = (itemInfo->type * 1000) + itemInfo->typeId;
+        std::string text(itemInfo->name);
+        auto color = get_title_color(itemInfo->range);
+
+        if (!ensure_text(user, itemId, text))
+            return;
+
+        auto posY = static_cast<int>(y - 30.0);
+        auto posX = static_cast<int>(x - user->title.pointX);
+
+        CStaticText::Draw(user->title.text, posX, posY, extrusion, color);
     }
 }
 

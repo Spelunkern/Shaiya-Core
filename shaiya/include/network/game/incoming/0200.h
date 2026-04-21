@@ -113,4 +113,12 @@ namespace shaiya
         Sex sex;
     };
     #pragma pack(pop)
+
+    #pragma pack(push, 1)
+    // TPC_PVPG_REQ
+    struct GameMovePvPZoneIncoming
+    {
+        uint16_t opcode{ 0x233 };
+    };
+    #pragma pack(pop)
 }
